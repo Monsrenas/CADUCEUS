@@ -13,6 +13,4 @@
     <x-label value="Model file" />
     <x-input type="file" class="w-full" wire:model='file' />
     <x-input-error for="field{{1}}" class="mt-2" />
-    <button type="submit" class="btn btn-success">Save</button>
-
 </form>

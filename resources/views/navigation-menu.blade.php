@@ -17,6 +17,12 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('requests') }}" :active="request()->routeIs('requests')">
+                        {{ __('Requests') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('resources') }}" :active="request()->routeIs('resources')">
                         {{ __('Resources') }}
                     </x-nav-link>

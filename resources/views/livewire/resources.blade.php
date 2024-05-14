@@ -6,7 +6,7 @@
             
                 <select name="coder_type"  wire:model='xcoder' 
                     class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-max py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500">
-                    <option value="A"  selected hidden>Select</option>
+                    <option value=""  selected hidden>Select</option>
                     <option value="document_type">Document Type</option>
                     <option value="models">Models</option>
                 </select>
@@ -42,7 +42,7 @@
             </x-slot>
             <x-slot name='footer'>
                     
-                <x-secondary-button wire:click="save" wire:loading.attr="disabled">
+                <x-secondary-button wire:click="{{$buttonSave}}" wire:loading.attr="disabled">
                     Save
                 </x-secondary-button>
                 

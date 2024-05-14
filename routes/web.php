@@ -22,10 +22,14 @@ Route::middleware([
         return view('dashboard', ['xcomponent' => "applicant"]);
     })->name('dashboard');
 
+    Route::get('/requests', function () {
+        return view('dashboard', ['xcomponent' => 'requests']);
+    })->name('requests');
+
     Route::get('/resource', function () {
         return view('dashboard', ['xcomponent' => 'resources']);
     })->name('resources');
-
+    
     Route::get('/nomenclature', function () {
         return view('dashboard', ['xcomponent' => 'nomenclature']);
     })->name('nomenclature');

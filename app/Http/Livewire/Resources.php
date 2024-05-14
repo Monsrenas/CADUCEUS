@@ -12,7 +12,7 @@ class Resources extends Component
     use WithFileUploads;
 
     public $field=[], $columna=[],$open=false, $xcoder="", $postToEdit="", $nameToDelete="", $list=[], $modelo="",
-           $docType=[], $code_id="";
+           $docType=[], $code_id="", $buttonSave="sabe";
     public $file, $title;
 
     public function mount()
@@ -38,6 +38,7 @@ class Resources extends Component
             $modelo = new ($this->modelo);    
             $this->columna=$modelo->getFillable();
         }
+        $this->buttonSave=($this->xcoder=="document_type")? "save":"submit";
     }
 
     public function new(){
