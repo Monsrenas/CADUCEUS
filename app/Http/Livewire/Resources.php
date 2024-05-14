@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class Resources extends Component
+{
+    use WithPagination;
+
+    public $field=[], $columna=[],$open=false, $xcoder="", $postToEdit="", $nameToDelete="", $list=[], $modelo="",
+           $docType=[], $xDocType="";
+
+    public function mount()
+    {
+        $this->docType=('App\Models\\document_type')::all();
+    }
+
+    public function render()
+    {
+        $lista=[];
+        
+        if ($this->modelo) {
+            
+            $lista=($this->modelo)::paginate(6);
+        }
+        return view('livewire.resources', compact('lista'));
+    }
+
+    public function updatedXcoder(){
+        $this->modelo="App\Models\\".$this->xcoder;
+
+        if ($this->xcoder) {
+            $modelo = new ($this->modelo);    
+            $this->columna=$modelo->getFillable();
+        }
+    }
+
+    public function new(){
+        $this->reset('postToEdit','field');
+        $this->open = true;
+    }
+
+    public function save() {
+        
+        $vldt=$this->validate(['field.*'=> 'required']);
+       
+        if (isset($vldt['field'])){
+                for ($i = 1; $i <= count($this->field); $i++) {
+                    $datos[$this->columna[$i-1]]=$this->field[$i]; 
+                }
+                if ($this->postToEdit=="") {
+                    $this->postToEdit=($this->modelo)::create($datos);
+                }
+                    else
+                    {
+                        $this->postToEdit->fill($datos);
+                        $this->postToEdit->save();
+
+                    }
+            $this->open = false;
+            $this->reset('postToEdit','field');
+        }
+    }
+
+    public function edit($postId){
+        $this->postToEdit = ($this->modelo)::find($postId);
+        $this->field=array();
+
+        if ($this->postToEdit) {
+            for ($i = 0; $i <= count($this->columna)-1; $i++) {
+               $this->field[$i+1]=$this->postToEdit[$this->columna[$i]];
+            }
+        }
+        $this->open = true; 
+
+    }
+}
