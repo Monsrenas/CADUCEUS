@@ -13,7 +13,7 @@
                 </th>
 
                 <th>
-                    Attributes
+                    File
                 </th>
                 <th class="text-center" >Actions</th>
             </tr>
@@ -26,11 +26,11 @@
                         
                     </td> 
                     <td scope="col" class="px-2 py-3 text-left">
-                        {{$item["name"]}}
+                        {{$item->code_id}}
                     </td>
                     
                     <td scope="col" class="px-2 py-3 text-left">
-                        {{$item["atributes"]}}
+                        {{$item["file"]}}
                     </td>
                     <td class="px-6 text-center">
                         <a wire:click="edit({{ $item->id }})"

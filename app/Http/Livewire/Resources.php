@@ -87,17 +87,14 @@ class Resources extends Component
     {
 
         $validatedData = $this->validate([
-
-        'title' => 'required',
-
         'file' => 'required',
         'code_id' => 'required',
         
 
         ]);
 
-        $validatedData['name'] = $this->file->store('files', 'public');
-
+        $validatedData['file'] = $this->file->store('files', 'public');
+    
         ('App\Models\\models')::create($validatedData);
 
         session()->flash('message', 'File successfully Uploaded.');

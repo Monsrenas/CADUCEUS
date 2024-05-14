@@ -10,17 +10,6 @@
         @endforeach
     </select>
 
-    <div class="form-group">
-
-<label for="exampleInputName">Title:</label>
-
-<input type="text" class="form-control" id="exampleInputName" placeholder="Enter title" wire:model="title">
-
-@error('title') <span class="text-danger">{{ $message }}</span> @enderror
-
-</div>
-
-
     <x-label value="Model file" />
     <x-input type="file" class="w-full" wire:model='file' />
     <x-input-error for="field{{1}}" class="mt-2" />
