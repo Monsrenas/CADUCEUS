@@ -4,13 +4,16 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class Resources extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     public $field=[], $columna=[],$open=false, $xcoder="", $postToEdit="", $nameToDelete="", $list=[], $modelo="",
-           $docType=[], $xDocType="";
+           $docType=[], $code_id="";
+    public $file, $title;
 
     public function mount()
     {
@@ -76,4 +79,29 @@ class Resources extends Component
         $this->open = true; 
 
     }
+
+    
+
+    public function submit()
+
+    {
+
+        $validatedData = $this->validate([
+
+        'title' => 'required',
+
+        'file' => 'required',
+        'code_id' => 'required',
+        
+
+        ]);
+
+        $validatedData['name'] = $this->file->store('files', 'public');
+
+        ('App\Models\\models')::create($validatedData);
+
+        session()->flash('message', 'File successfully Uploaded.');
+
+    }
+
 }
