@@ -26,7 +26,7 @@
                         
                     </td> 
                     <td scope="col" class="px-2 py-3 text-left">
-                        {{$item->code_id}}
+                        {{$item->doc_type->name}}
                     </td>
                     
                     <td scope="col" class="px-2 py-3 text-left">

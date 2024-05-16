@@ -17,4 +17,8 @@ class document_type extends Model
     {
         return $this->hasMany(documents::class,'code_id');
     }
+    public function models()
+    {
+        return $this->hasMany(models::class,'code_id');
+    }
 }

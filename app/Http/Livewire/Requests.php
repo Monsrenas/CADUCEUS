@@ -7,7 +7,7 @@ use Livewire\Component;
 class Requests extends Component
 {
 
-    public $postToEdit="", $xOpen=false;
+    public $postToEdit="", $xOpen=false, $typeJob="";
     public function render()
     {
         return view('livewire.requests');
