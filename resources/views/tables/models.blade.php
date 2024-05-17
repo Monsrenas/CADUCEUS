@@ -5,9 +5,6 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 
-                <th scope="col" class="px-2 py-3 text-center">
-                    No.
-                </th>
                 <th>
                     Name
                 </th>
@@ -22,9 +19,7 @@
             
             @foreach ($lista as $item)
                 <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
-                    <td class="w-4 text-gray-400">
-                        
-                    </td> 
+                   
                     <td scope="col" class="px-2 py-3 text-left">
                         {{$item->doc_type->name}}
                     </td>

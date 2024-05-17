@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('document_types', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('atributes',20);
+            $table->json('atributes',20)->nullable();
         });
     }
 

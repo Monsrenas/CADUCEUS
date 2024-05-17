@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('file');
             $table->string('code_id');
             $table->string('user_id');
-            $table->string('state',2);            
+            $table->string('state',1);            
             $table->date('expiration');
             $table->timestamps();
         });
