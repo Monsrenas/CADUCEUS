@@ -44,6 +44,6 @@
         </tbody>
     </table>
     <div class="mt-1">
-        
+        {{ $lista->links() }}
     </div>    
 </div>

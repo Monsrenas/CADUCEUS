@@ -12,9 +12,6 @@
                     Name
                 </th>
 
-                <th>
-                    Attributes
-                </th>
                 <th class="text-center" >Actions</th>
             </tr>
         </thead>
@@ -29,9 +26,6 @@
                         {{$item["name"]}}
                     </td>
                     
-                    <td scope="col" class="px-2 py-3 text-left">
-                        {{$item["atributes"]}}
-                    </td>
                     <td class="px-6 text-center">
                         <a wire:click="edit({{ $item->id }})"
                             class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
@@ -49,6 +43,8 @@
         </tbody>
     </table>
     <div class="mt-1">
-        
+         
+        {{ $lista->links() }}
+    
     </div>    
 </div>
