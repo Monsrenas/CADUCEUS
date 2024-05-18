@@ -3,13 +3,17 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\document_type;
+use App\Models\User;
 use App\Models\applicant;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class Requests extends Component
 {
 
-    public $postToEdit="", $xOpen=false, $typeJob="";
+    public $postToEdit="", $xOpen=false;
+    public $typeJob="",$name, $email="";
+
     public function render()
     {
         return view('livewire.requests');
@@ -24,16 +28,21 @@ class Requests extends Component
     public function save() {
         
         $vldt=$this->validate(['typeJob'=> 'required','name'=> 'required', 'email'=> 'required']);
-        if (isset($vldt['field'])){
+        if (isset($vldt['typeJob'])){
+               $password=Str::random(8);
                $datos=[
-                'typeJob' => $this->typeJob,
+                'password' => Hash::make($password),
                 'name'=>$this->name,
                 'email'=>$this->email
                ];
 
                 if ($this->postToEdit=="") {
-                    $this->postToEdit=document_type::create($datos);
-
+                    $this->postToEdit=User::create($datos);
+                    $applicant=applicant::create([
+                                                    'user_id' => $this->postToEdit->id,
+                                                    'type_of_job'=>$this->typeJob,
+                                                    'process_state'=>"0"
+                                                ]);
                 }
                     else
                     {
@@ -42,7 +51,7 @@ class Requests extends Component
 
                     }
             $this->open = false;
-            $this->reset('postToEdit','field');
+            $this->reset('postToEdit');
         }
     }
 }
