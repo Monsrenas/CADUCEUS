@@ -12,7 +12,9 @@
                     Name
                 </th>
 
-                <th class="text-center" >Actions</th>
+                <th class="text-center" >Email</th>
+                <th>Application Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,9 +25,14 @@
                         
                     </td> 
                     <td scope="col" class="px-2 py-3 text-left">
-                        {{$item["name"]}}
+                        {{$item["user"]->name}}
                     </td>
-                    
+                    <td>
+                        {{$item["user"]->email}}                    
+                    </td>
+                    <td>
+                        {{$item["process_state"]}}
+                    </td>
                     <td class="px-6 text-center">
                         <a wire:click="edit({{ $item->id }})"
                             class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">

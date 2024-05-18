@@ -8,7 +8,7 @@
                     </x-button>
                 </div>
             </div>
-              
+            @include('tables.requests' )
         </div>     
         
     </div>

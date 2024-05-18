@@ -16,7 +16,8 @@ class Requests extends Component
 
     public function render()
     {
-        return view('livewire.requests');
+        $lista=applicant::paginate(6);
+        return view('livewire.requests', compact('lista'));
     }
 
     public function new(){
