@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->longText('text');
-            $table->string('document_id');
-            $table->string('user_id');
+            $table->foreignId('document_id')->nullable();
+            $table->foreignId('user_id');
             $table->boolean('read')->default(false);
             $table->timestamps();
         });

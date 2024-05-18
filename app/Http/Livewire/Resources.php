@@ -49,9 +49,9 @@ class Resources extends Component
     public function save() {
         
         $vldt=$this->validate(['field.*'=> 'required']);
-       
         if (isset($vldt['field'])){
                 for ($i = 1; $i <= count($this->field); $i++) {
+                    if (gettype($this->field[$i])=="array") {$this->field[$i]=json_encode($this->field[$i]);}
                     $datos[$this->columna[$i-1]]=$this->field[$i]; 
                 }
                 if ($this->postToEdit=="") {
@@ -77,6 +77,8 @@ class Resources extends Component
                $this->field[$i+1]=$this->postToEdit[$this->columna[$i]];
             }
         }
+        
+        if ($this->xcoder=="document_type") {$this->field[2]=json_decode($this->field[2],true);}
         $this->open = true; 
 
     }
