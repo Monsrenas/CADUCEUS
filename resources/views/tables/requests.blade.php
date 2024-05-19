@@ -1,5 +1,6 @@
 @php
     $status=["Started","Under review","Approved","Rejected"];
+
 @endphp
 <div class="relative h-fit shadow-md sm:rounded-lg">
     

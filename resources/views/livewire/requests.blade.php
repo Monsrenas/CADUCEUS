@@ -8,7 +8,9 @@
                     </x-button>
                 </div>
             </div>
-            @include('tables.requests' )
+            @if ($lista)
+                @include('tables.requests' )
+            @endif
         </div>     
         
     </div>

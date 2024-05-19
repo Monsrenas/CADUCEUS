@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\applicant;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Mail;
 
 class Requests extends Component
 {
@@ -45,28 +46,36 @@ class Requests extends Component
                                                     'type_of_job'=>$this->typeJob,
                                                     'process_state'=>"0"
                                                 ]);
+                 $this->SendMail();
                 }
-                    else
+                else
                     {
                         $this->postToEdit->fill($datos);
                         $this->postToEdit->save();
 
                     }
+
             $this->xOpen = false;
             $this->reset();
         }
     }
 
-    public function SendMail() {
-        $passingDataToView = 'Simple Mail Send In Laravel!';
-        $data["email"] = 'test@mail.com';
-        $data["title"] = "Mail Testing";
-
-        Mail::send('mail.simplemail', ['passingDataToView'=> $passingDataToView], function ($message) use ($data){
-            $message->to($data["email"],'John Doe');
-            $message->subject($data["title"]);
-        });;
-
-        return 'Mail Sent';
+    public function SendMail()
+    {
+  
+        Mail::send('emails.applicant-mail',
+        array(
+            'name' => $this->name,
+            'email' => $this->email,
+           // 'attachment' => $this->attachment,
+           // 'comment' => $this->comment,
+            ),
+            function($message){
+                $message->from('references@tcihospital.tc','InterHealthCanada');
+                $message->to($this->email, $this->name )->subject('Start of the accreditation process');
+            }
+        );
+  
+        $this->success = 'We wish you success in the process';
     }
 }
