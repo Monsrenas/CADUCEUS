@@ -19,7 +19,7 @@ class Requests extends Component
         $lista=applicant::paginate(6);
         return view('livewire.requests', compact('lista'));
     }
-
+    
     public function new(){
     
         $this->reset('postToEdit');
@@ -34,7 +34,8 @@ class Requests extends Component
                $datos=[
                 'password' => Hash::make($password),
                 'name'=>$this->name,
-                'email'=>$this->email
+                'email'=>$this->email,
+                'role'=>'3'
                ];
 
                 if ($this->postToEdit=="") {
@@ -51,8 +52,21 @@ class Requests extends Component
                         $this->postToEdit->save();
 
                     }
-            $this->open = false;
-            $this->reset('postToEdit');
+            $this->xOpen = false;
+            $this->reset();
         }
+    }
+
+    public function SendMail() {
+        $passingDataToView = 'Simple Mail Send In Laravel!';
+        $data["email"] = 'test@mail.com';
+        $data["title"] = "Mail Testing";
+
+        Mail::send('mail.simplemail', ['passingDataToView'=> $passingDataToView], function ($message) use ($data){
+            $message->to($data["email"],'John Doe');
+            $message->subject($data["title"]);
+        });;
+
+        return 'Mail Sent';
     }
 }

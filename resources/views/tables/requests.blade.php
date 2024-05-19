@@ -1,37 +1,35 @@
-
+@php
+    $status=["Started","Under review","Approved","Rejected"];
+@endphp
 <div class="relative h-fit shadow-md sm:rounded-lg">
     
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 
-                <th scope="col" class="px-2 py-3 text-center">
-                    No.
-                </th>
-                <th>
-                    Name
+               
+                <th class="px-2 py-3 text-center">
+                    Applicant name
                 </th>
 
                 <th class="text-center" >Email</th>
-                <th>Application Status</th>
-                <th>Actions</th>
+                <th class="px-2 py-3 text-center">Application Status</th>
+                <th class="px-2 py-3 text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
             
             @foreach ($lista as $item)
                 <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
-                    <td class="w-4 text-gray-400">
-                        
-                    </td> 
+                    
                     <td scope="col" class="px-2 py-3 text-left">
                         {{$item["user"]->name}}
                     </td>
-                    <td>
+                    <td class="text-left">
                         {{$item["user"]->email}}                    
                     </td>
                     <td>
-                        {{$item["process_state"]}}
+                        {{$status[$item["process_state"]]}}
                     </td>
                     <td class="px-6 text-center">
                         <a wire:click="edit({{ $item->id }})"
