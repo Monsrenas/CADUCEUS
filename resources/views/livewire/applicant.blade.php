@@ -26,29 +26,13 @@
 
 <?php
     $documents= array("HPA application for Registration", "HPA application for Licensure/Renewal", "Curriculum vitae", "Police Record","Copy of passport");
-    $colo=array("green","blue","orange", "red", "gray");
+    $colo=array("green","orange", "red", "gray");
+    $status=["8986","x2699","9745","x26d4"," x2714"];
 ?>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg" >
-                <div style=" display: grid; grid-template-columns: 1fr 1fr 1fr;  grid-column-gap: 10px;
-                             grid-row-gap: 1em; padding: 14px;">
-                    @foreach ($doc_list as $doc=>$ind )
-                        @php
-                        $Ic=4;
-                           if (isset($ind->documents)and(count($ind->documents)>0)) {$Ic=1;}
-                        @endphp
-                        <div wire:click="DocDetail('{{$ind->name}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr;" >
-                            {{$ind->name}}
-                            @if (isset($ind->documents)and(count($ind->documents)>0))
-                             
-                               {{$ind->documents[0]->state}}
-                               
-                            @endif    
-                            <div style=" text-aling:center; font-size:1.6em;" >&#9745;</div>
-                        </div>  
-                    @endforeach
-                </div>             
+                @include('tables.document')     
             </div>
         </div>
         <!-- Modal de Crear/editar -->
@@ -60,7 +44,7 @@
                     </x-slot>
 
                     <x-slot name='content'>
-                        <input type="file">
+                        @include('forms.document')
                     </x-slot>
 
                     <x-slot name='footer'>
