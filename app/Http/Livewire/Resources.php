@@ -39,6 +39,7 @@ class Resources extends Component
             $this->columna=$modelo->getFillable();
         }
         $this->buttonSave=($this->xcoder=="document_type")? "save":"submit";
+        $this->resetPage();
     }
 
     public function new(){
@@ -79,6 +80,7 @@ class Resources extends Component
         }
         
         if ($this->xcoder=="document_type") {$this->field[2]=json_decode($this->field[2],true);}
+        else { $this->code_id=$this->postToEdit->code_id; }
         $this->open = true; 
 
     }

@@ -26,7 +26,7 @@
 
 <?php
     $documents= array("HPA application for Registration", "HPA application for Licensure/Renewal", "Curriculum vitae", "Police Record","Copy of passport");
-    $colo=array("green","green","orange", "red", "gray");
+    $colo=array("green","blue","orange", "red", "gray");
 ?>
 
     <div class="py-12">
@@ -34,14 +34,46 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg" >
                 <div style=" display: grid; grid-template-columns: 1fr 1fr 1fr;  grid-column-gap: 10px;
                              grid-row-gap: 1em; padding: 14px;">
-                    @foreach ($documents as $doc=>$ind )
-                        <div class="card" style="background: {{$colo[$doc]}}; display: grid; grid-template-columns: 6fr 1fr;" >
-                            {{$ind}}
+                    @foreach ($doc_list as $doc=>$ind )
+                        @php
+                        $Ic=4;
+                           if (isset($ind->documents)and(count($ind->documents)>0)) {$Ic=1;}
+                        @endphp
+                        <div wire:click="DocDetail('{{$ind->name}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr;" >
+                            {{$ind->name}}
+                            @if (isset($ind->documents)and(count($ind->documents)>0))
+                             
+                               {{$ind->documents[0]->state}}
+                               
+                            @endif    
                             <div style=" text-aling:center; font-size:1.6em;" >&#9745;</div>
                         </div>  
                     @endforeach
                 </div>             
             </div>
         </div>
+
+<!-- Modal de Crear/editar -->
+<x-dialog-modal wire:model="open">
+            <x-slot name='title'>
+                <div class="inline-flex">
+                    <p class="uppercase  text-xl text-center">{{$this->DocName}} </p>
+                </div>
+            </x-slot>
+
+            <x-slot name='content'>
+                <input type="file">
+            </x-slot>
+
+            <x-slot name='footer'>
+                    
+                <x-secondary-button wire:click="save" wire:loading.attr="disabled">
+                    Save
+                </x-secondary-button>
+                
+            </x-slot>
+</x-dialog-modal>  
+
+
     </div>
 </div>
