@@ -1,9 +1,12 @@
 <x-guest-layout>
+    
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
+                
         </x-slot>
-
+        <div class="text-center font-header text-4xl font-semibold text-gray-900 leading-none">CADUCEUS</div>
+            <div class="mb-6 text-sm font-light text-true-gray-500  text-center">System for Credential and Document Upload Checklist for Eligible Users</div>
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))
@@ -11,7 +14,7 @@
                 {{ session('status') }}
             </div>
         @endif
-
+        
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
