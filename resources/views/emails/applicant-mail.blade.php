@@ -24,6 +24,8 @@
     color: white;
     font-size: .66em;
     ">Access the platform</a>
-
+    <p>
+    The temporary access password is {{$Password}}, you must change it at the first start of the section
+    </p>
 </body>
 </html>

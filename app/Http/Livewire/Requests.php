@@ -13,12 +13,13 @@ class Requests extends Component
 {
 
     public $postToEdit="", $xOpen=false;
-    public $typeJob="",$name, $email="";
+    public $typeJob="",$name, $email="", $tmpPassword="";
     public $postIdToDelete="", $nameToDelete="", $showDeleteModal=false;
 
     public function render()
     {
         $lista=applicant::paginate(6);
+        
         return view('livewire.requests', compact('lista'));
     }
     
@@ -34,9 +35,10 @@ class Requests extends Component
         if (isset($vldt['typeJob'])){
               
                 if ($this->postToEdit=="") {
-                    $password=Str::random(8);
+                    $this->tmpPassword=Str::random(8);
+                    
                     $datos=[
-                            'password' => Hash::make($password),
+                            'password' => Hash::make($this->tmpPassword),
                             'name'=>$this->name,
                             'email'=>$this->email,
                             'role'=>'3'
@@ -47,7 +49,9 @@ class Requests extends Component
                                                     'type_of_job'=>$this->typeJob,
                                                     'process_state'=>"0"
                                                 ]);
+                 
                  $this->SendMail();
+    
                 }
                 else
                     {
@@ -61,11 +65,11 @@ class Requests extends Component
                         $user=User::find($this->postToEdit->user_id);
                         $user->fill($datos);
                         $user->save();
-
+                        $this->reset();
                     }
 
             $this->xOpen = false;
-            $this->reset();
+            
         }
     }
 
@@ -114,11 +118,14 @@ class Requests extends Component
             'email' => $this->email,
            // 'attachment' => $this->attachment,
            // 'comment' => $this->comment,
+             'Password'=>$this->tmpPassword,
             ),
             function($message){
                 $message->from('references@tcihospital.tc','InterHealthCanada');
                 $message->to($this->email, $this->name )->subject('Start of the accreditation process');
             }
         );
+
+        $this->reset();
     }
 }

@@ -28,7 +28,6 @@
     $documents= array("HPA application for Registration", "HPA application for Licensure/Renewal", "Curriculum vitae", "Police Record","Copy of passport");
     $colo=array("green","blue","orange", "red", "gray");
 ?>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg" >
@@ -52,28 +51,25 @@
                 </div>             
             </div>
         </div>
+        <!-- Modal de Crear/editar -->
+        <x-dialog-modal wire:model="open">
+                    <x-slot name='title'>
+                        <div class="inline-flex">
+                            <p class="uppercase  text-xl text-center">{{$this->DocName}} </p>
+                        </div>
+                    </x-slot>
 
-<!-- Modal de Crear/editar -->
-<x-dialog-modal wire:model="open">
-            <x-slot name='title'>
-                <div class="inline-flex">
-                    <p class="uppercase  text-xl text-center">{{$this->DocName}} </p>
-                </div>
-            </x-slot>
+                    <x-slot name='content'>
+                        <input type="file">
+                    </x-slot>
 
-            <x-slot name='content'>
-                <input type="file">
-            </x-slot>
-
-            <x-slot name='footer'>
-                    
-                <x-secondary-button wire:click="save" wire:loading.attr="disabled">
-                    Save
-                </x-secondary-button>
-                
-            </x-slot>
-</x-dialog-modal>  
-
-
+                    <x-slot name='footer'>
+                            
+                        <x-secondary-button wire:click="save" wire:loading.attr="disabled">
+                            Save
+                        </x-secondary-button>
+                        
+                    </x-slot>
+        </x-dialog-modal>  
     </div>
 </div>
