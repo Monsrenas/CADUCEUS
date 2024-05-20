@@ -83,7 +83,6 @@ class Resources extends Component
 
     }
 
-    
 
     public function submit()
 

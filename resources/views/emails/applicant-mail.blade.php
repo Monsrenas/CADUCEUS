@@ -12,5 +12,18 @@
         We are pleased to announce that, with this email, your accreditation process at our institution begins. 
         To continue, access our platform through the link indicated below
     </p>
+
+    <a href=" {{ route('login') }}" style="display: block;
+    width: 115px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 4px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    color: white;
+    font-size: .66em;
+    ">Access the platform</a>
+
 </body>
 </html>
