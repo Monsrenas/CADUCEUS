@@ -35,6 +35,7 @@
                 @include('tables.document')     
             </div>
         </div>
+    
         <!-- Modal de Crear/editar -->
         <x-dialog-modal wire:model="open">
                     <x-slot name='title'>

@@ -10,9 +10,27 @@ class Applicant extends Component
 {
 
     public $doc_list=[];
-    public $open=false, $DocName="";
+    public $open=false, $DocName="", $modelFile, $document_to_edit;
 
-    public function mount()
+    public function render()
+    {
+        $this->docList();
+        $doc_list=$this->doc_list;
+        return view('livewire.applicant', compact('doc_list'));
+    }
+
+    public function DocDetail($id,$type)
+    {
+        $type=document_type::find($type);
+        $this->document_to_edit=documents::find($id);
+        
+        $this->DocName=$type->name;
+        $this->modelFile=$type->models;
+
+        $this->open=true;
+    }
+
+    public function docList()
     {
         $userID=auth()->user()->id;
         
@@ -21,19 +39,5 @@ class Applicant extends Component
             $q->where('user_id', '=', $userID);
     
         }])->get();
-       
-    }
-
-    public function render()
-    {
-        $doc_list=$this->doc_list;
-        return view('livewire.applicant', compact('doc_list'));
-    }
-
-    public function DocDetail($id,$type)
-    {
-        $docType=documents::find($id);
-        $this->DocName=$id;
-        $this->open=true;
     }
 }
