@@ -1,11 +1,13 @@
 <?php
   $staText=["awaiting review","With signs", "Approved", "Rejected"];
+  $FileAcc=[".pdf","image/*"];
+  $atrb=(isset($attr[1]))?$attr[1]:0;
 ?>
-
+ 
 <div class="w-full inline-block align-middle mb-4">
    
   <x-label value="File" />
-    <x-input type="file"  wire:model='file' accept="image/*" />
+    <x-input type="file"  wire:model='file' accept="{{$FileAcc[$atrb]}}"  />
   <x-input-error for="file" class="mt-2" />
 
   @if (($modelFile)and(!$document_to_edit))
@@ -15,8 +17,8 @@
   @endif
 </div>
 
-<x-label value="Expiry time" />
-    <x-input type="number" wire:model='expiry'/>
+<x-label value="Expiry time (in months)" />
+    <x-input type="number" wire:model='expiry' class="font-medium text-sm"/>
 <x-input-error for="expiry"  />
 
 @if ($document_to_edit)

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\document_type;
 use App\Models\documents;
@@ -13,8 +14,8 @@ class Applicant extends Component
 {
     use WithFileUploads;
 
-    public $doc_list=[];
-    public $open=false, $DocName="", $modelFile, $document_to_edit, $file="", $type="", $expiry ;
+    public $open=false, $doc_list=[];
+    public $DocName="", $modelFile, $document_to_edit, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[];
 
     public function render()
     {
@@ -26,12 +27,19 @@ class Applicant extends Component
     public function DocDetail($id,$type)
     {
         $this->type=document_type::find($type);
-        $this->document_to_edit=documents::find($id);
-        
-        $this->DocName=$this->type->name;
-        $this->modelFile=$this->type->models;
 
+        $this->document_to_edit=documents::find($id);
+        if ($this->document_to_edit)
+        {
+            $expiry=$this->document_to_edit->expiration;
+            $DocFile=$this->document_to_edit->file;
+        }
+
+        $this->DocName=$this->type->name;
+        $this->attr= json_decode($this->type->atributes,true);
+        $this->modelFile=$this->type->models;
         $this->open=true;
+        
     }
 
     public function docList()
@@ -51,23 +59,32 @@ class Applicant extends Component
             'file' => 'required',
             ]);
     
-        $validatedData['file'] = $this->file->store('files', 'public');
-        
         $exDate = Carbon::parse(now());
 
         $this->expiry=($this->expiry>0)?$this->expiry:120;
-        $this->expiry = $exDate->addMonths($this->expiry);
+        $this->expiry = $exDate->addMonths($this->expiry);    
 
+        $validatedData['file'] = $this->file->store('files', 'public');
+        
         $data=['file'=> $validatedData['file'],
-        'code_id'=> $this->type->id,
-        'user_id'=>auth()->user()->id,
-        'state'=>0,
-        'expiration'=>$this->expiry,
+            'code_id'=> $this->type->id,
+            'user_id'=>auth()->user()->id,
+            'state'=>0,
+            'expiration'=>$this->expiry,
         ];
 
+        if ($this->document_to_edit)    
+        {
+            $regre=Storage::disk('public')->delete(public_path("/storage/".$this->document_to_edit->file));
+            $this->document_to_edit->fill($data);
+            $this->document_to_edit->save();
+        }
+        else {documents::create($data);}
 
 
-        documents::create($data);
+
+
+        
     
         session()->flash('message', 'File successfully Uploaded.');
         $this->reset();
