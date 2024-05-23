@@ -17,7 +17,8 @@ class Applicant extends Component
 
     private $preview=null;
     public $open=false, $doc_list=[];
-    public $DocName="", $modelFile, $document_to_edit=null, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[];
+    public $DocName="", $modelFile, $document_to_edit=null, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[],
+           $editReference=false, $field=[];
 
     public function render()
     {
@@ -29,7 +30,7 @@ class Applicant extends Component
 
     public function DocDetail($id,$type)
     {
-        $this->reset('document_to_edit', 'expiry','file');
+        $this->reset('document_to_edit', 'expiry','file','editReference');
         $this->type=document_type::find($type);
 
         $this->document_to_edit=documents::find($id);
@@ -47,6 +48,13 @@ class Applicant extends Component
         $this->modelFile=$this->type->models;
         $this->open=true;
         
+    }
+
+    public function ReferenceDetail()
+    {
+        $this->editReference=true;
+
+        $this->open=true;
     }
 
     public function docList()

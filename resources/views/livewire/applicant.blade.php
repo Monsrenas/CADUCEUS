@@ -40,12 +40,22 @@
         <x-dialog-modal wire:model="open">
                     <x-slot name='title'>
                         <div class="inline-flex">
-                            <p class="uppercase  text-xl text-center">{{$this->DocName}} </p>
+                            <p class="uppercase  text-xl text-center">
+                                @if ($this->editReference)
+                                List 3 persons to whom a request will be sent for letters of reference.
+                                @else
+                                    {{$this->DocName}} 
+                                @endif
+                            </p>
                         </div>
                     </x-slot>
 
                     <x-slot name='content'>
-                        @include('forms.document')
+                        @if ($this->editReference)
+                            @include('forms.references')  
+                        @else
+                            @include('forms.document')
+                        @endif
                     </x-slot>
 
                     <x-slot name='footer'>
