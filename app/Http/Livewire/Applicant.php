@@ -29,7 +29,7 @@ class Applicant extends Component
 
     public function DocDetail($id,$type)
     {
-        $this->reset('document_to_edit');
+        $this->reset('document_to_edit', 'expiry','file');
         $this->type=document_type::find($type);
 
         $this->document_to_edit=documents::find($id);
@@ -64,7 +64,7 @@ class Applicant extends Component
 
             $q->where('user_id', '=', $userID);
     
-        }])->get();
+        }])->whereJsonContains('atributes->2', true)->get();
     }
 
     public function save()
