@@ -40,13 +40,6 @@ class Applicant extends Component
             $this->expiry=$creado->diffInMonths($expiry);
 
             $path =public_path("/storage/".$this->document_to_edit->file);
-            
-            /*$this->preview= Response::make(file_get_contents($path), 200, [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="'.$this->document_to_edit->file.'"'
-            ]);  */          
-            
-
         }
 
         $this->DocName=$this->type->name;
@@ -103,11 +96,14 @@ class Applicant extends Component
 
     public function donwload()
     {
-        //return response()->download(public_path("/storage/".$this->modelFile->file));
-
+        $charts=["<",">", ":", "“", "/", "\\", "|", "?", "*"];
+        $name="Form_".$this->type->name;
+        foreach ($charts as $key => $value) {
+            $name=str_replace($value,"-",$name);
+        }
+        
         if (Storage::disk('public')->exists($this->modelFile->file)){
-                
-            return Storage::disk(name:'public')->download($this->modelFile->file);
+            return Storage::disk(name:'public')->download($this->modelFile->file,$name);
         }
     }
 
@@ -121,7 +117,6 @@ class Applicant extends Component
     public function DeleteFile($fileToDel)
     {
         if (Storage::disk('public')->exists($fileToDel)){
-                
             $regre=Storage::disk(name:'public')->delete($fileToDel);
         }
     }
