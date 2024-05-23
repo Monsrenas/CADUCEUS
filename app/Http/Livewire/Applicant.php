@@ -103,7 +103,12 @@ class Applicant extends Component
 
     public function donwload()
     {
-        return response()->download(public_path("/storage/".$this->modelFile->file));
+        //return response()->download(public_path("/storage/".$this->modelFile->file));
+
+        if (Storage::disk('public')->exists($this->modelFile->file)){
+                
+            return Storage::disk(name:'public')->download($this->modelFile->file);
+        }
     }
 
     public function DeleteDoc($DocToDel)
