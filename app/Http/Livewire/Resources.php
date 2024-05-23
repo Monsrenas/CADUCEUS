@@ -12,8 +12,9 @@ class Resources extends Component
     use WithPagination;
     use WithFileUploads;
 
-    public $field=[], $columna=[],$open=false, $xcoder="", $postToEdit="", $nameToDelete="", $list=[], $modelo="",
-           $docType=[], $code_id="", $buttonSave="sabe";
+    public $field=[], $columna=[],$open=false, $xcoder="", $postToEdit="", $list=[], $modelo="",
+           $docType=[], $code_id="", $buttonSave="sabe",
+           $showDeleteModal, $postIdToDelete="", $nameToDelete="";
     public $file, $title;
 
     public function mount()
@@ -86,7 +87,6 @@ class Resources extends Component
 
     }
 
-
     public function submit()
 
     {
@@ -104,11 +104,7 @@ class Resources extends Component
 
         if ($this->postToEdit)    
         { 
-            if (Storage::disk('public')->exists($this->postToEdit->file)){
-                
-                $regre=Storage::disk(name:'public')->delete($this->postToEdit->file);
-            }
-             
+            $this->DeleteFile($this->postToEdit->file);
             $this->postToEdit->fill($validatedData);
             $this->postToEdit->save();
         }
@@ -116,7 +112,35 @@ class Resources extends Component
 
 
         session()->flash('message', 'File successfully Uploaded.');
-
+        $this->reset('postToEdit','open','field');
     }
 
+    public function confirmDelete($postId){
+        
+        $this->postIdToDelete = $postId;
+        $PtoDel= ('App\Models\\'.$this->xcoder)::find($postId);
+        $this->nameToDelete=($this->xcoder=='models')?$PtoDel->doc_type->name:$PtoDel->name;
+        $this->showDeleteModal = true;
+    }
+
+    public function deletePost(){
+        if ($this->postIdToDelete) {
+            $post = ('App\Models\\'.$this->xcoder)::find($this->postIdToDelete);
+            if ($post) {
+                if ($this->xcoder=='models') { $this->DeleteFile($post->file);   }
+                $post->delete();
+            }
+        }
+
+        $this->reset('postIdToDelete','nameToDelete');
+        $this->showDeleteModal = false;
+    }
+
+    public function DeleteFile($fileToDel)
+    {
+        if (Storage::disk('public')->exists($fileToDel)){
+                
+            $regre=Storage::disk(name:'public')->delete($fileToDel);
+        }
+    }
 }

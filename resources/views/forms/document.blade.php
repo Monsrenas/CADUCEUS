@@ -5,10 +5,12 @@
 ?>
  
 <div class="w-full inline-block align-middle mb-4">
-   
-  <x-label value="File" />
-    <x-input type="file"  wire:model='file' accept="{{$FileAcc[$atrb]}}"  />
-  <x-input-error for="file" class="mt-2" />
+  
+  @if (!$document_to_edit)
+    <x-label value="File" />
+      <x-input type="file"  wire:model='file' accept="{{$FileAcc[$atrb]}}"  />
+    <x-input-error for="file" class="mt-2" />
+  @endif
 
   @if (($modelFile)and(!$document_to_edit))
     <x-secondary-button wire:click="donwload" wire:loading.attr="disabled" class="float-right align-middle bg-green-700 hover:bg-green-600" >
@@ -17,16 +19,28 @@
   @endif
 </div>
 
-<x-label value="Expiry time (in months)" />
-    <x-input type="number" wire:model='expiry' class="font-medium text-sm"/>
-<x-input-error for="expiry"  />
+
+  <x-label value="Expiry time (in months)" />
+      <x-input type="number" wire:model='expiry' class="font-medium text-sm"/>
+  <x-input-error for="expiry"  />
 
 @if ($document_to_edit)
   <div class="w-full p-2 bg-gray-300 mt-2 text-black">
       
         <span class="font-semibold">Status:</span>  {{$staText[$document_to_edit->state]}}
-        @json($prvw);
+        
   </div>
-
+<table class="w-full">
+  <td>&#x1F4C1;</td>
+  <td width="70%">My {{$document_to_edit->doc_type->name}}</td>
+  <td class="text-center">
+    @if (($document_to_edit->state==0))
+      <a wire:click="DeleteDoc({{ $document_to_edit->id }})" 
+        class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
+          Delete 
+      </a>
+    @endif
+  </td>
+</table>
   
 @endif

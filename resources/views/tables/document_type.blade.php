@@ -32,7 +32,7 @@
                             Edit
                         </a>
                         @if ((!isset($item->models)))
-                        <a wire:click="confirmDelete(1)" 
+                        <a wire:click="confirmDelete({{ $item->id }})" 
                             class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
                             Delete 
                         </a>

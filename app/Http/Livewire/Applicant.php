@@ -17,7 +17,7 @@ class Applicant extends Component
 
     private $preview=null;
     public $open=false, $doc_list=[];
-    public $DocName="", $modelFile, $document_to_edit, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[];
+    public $DocName="", $modelFile, $document_to_edit=null, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[];
 
     public function render()
     {
@@ -29,9 +29,9 @@ class Applicant extends Component
 
     public function DocDetail($id,$type)
     {
-        $this->reset();
+        $this->reset('document_to_edit');
         $this->type=document_type::find($type);
-        //XHmJqjitCyImbWt5MzPLLUiptU76Pmf1G142b0dM
+
         $this->document_to_edit=documents::find($id);
         if ($this->document_to_edit)
         {
@@ -91,20 +91,11 @@ class Applicant extends Component
         
         if ($this->document_to_edit)    
         { 
-            if (Storage::disk('public')->exists($this->document_to_edit->file)){
-                
-                $regre=Storage::disk(name:'public')->delete($this->document_to_edit->file);
-            }
-             
+            $this->DeleteFile($this->document_to_edit->file);
             $this->document_to_edit->fill($data);
             $this->document_to_edit->save();
         }
         else {documents::create($data);}
-
-
-
-
-        
     
         session()->flash('message', 'File successfully Uploaded.');
         $this->reset();
@@ -113,5 +104,20 @@ class Applicant extends Component
     public function donwload()
     {
         return response()->download(public_path("/storage/".$this->modelFile->file));
+    }
+
+    public function DeleteDoc($DocToDel)
+    {
+        $this->DeleteFile($this->document_to_edit->file);
+        $this->document_to_edit->delete();
+        $this->reset();
+    }
+
+    public function DeleteFile($fileToDel)
+    {
+        if (Storage::disk('public')->exists($fileToDel)){
+                
+            $regre=Storage::disk(name:'public')->delete($fileToDel);
+        }
     }
 }
