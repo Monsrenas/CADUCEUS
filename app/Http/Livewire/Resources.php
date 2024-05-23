@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Resources extends Component
 {
@@ -99,7 +100,20 @@ class Resources extends Component
 
         $validatedData['file'] = $this->file->store('files', 'public');
     
-        ('App\Models\\models')::create($validatedData);
+         
+
+        if ($this->postToEdit)    
+        { 
+            if (Storage::disk('public')->exists($this->postToEdit->file)){
+                
+                $regre=Storage::disk(name:'public')->delete($this->postToEdit->file);
+            }
+             
+            $this->postToEdit->fill($validatedData);
+            $this->postToEdit->save();
+        }
+        else {('App\Models\\models')::create($validatedData);}
+
 
         session()->flash('message', 'File successfully Uploaded.');
 

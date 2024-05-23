@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Response;
 
 use App\Models\document_type;
 use App\Models\documents;
@@ -14,6 +15,7 @@ class Applicant extends Component
 {
     use WithFileUploads;
 
+    private $preview=null;
     public $open=false, $doc_list=[];
     public $DocName="", $modelFile, $document_to_edit, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[];
 
@@ -21,18 +23,30 @@ class Applicant extends Component
     {
         $this->docList();
         $doc_list=$this->doc_list;
-        return view('livewire.applicant', compact('doc_list'));
+        $prvw=$this->preview;
+        return view('livewire.applicant', compact('doc_list','prvw'));
     }
 
     public function DocDetail($id,$type)
     {
+        $this->reset();
         $this->type=document_type::find($type);
-
+        //XHmJqjitCyImbWt5MzPLLUiptU76Pmf1G142b0dM
         $this->document_to_edit=documents::find($id);
         if ($this->document_to_edit)
         {
-            $expiry=$this->document_to_edit->expiration;
-            $DocFile=$this->document_to_edit->file;
+            $creado = $this->document_to_edit->created_at;
+            $expiry = Carbon::parse($this->document_to_edit->expiration);
+            $this->expiry=$creado->diffInMonths($expiry);
+
+            $path =public_path("/storage/".$this->document_to_edit->file);
+            
+            $this->preview= Response::make(file_get_contents($path), 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="'.$this->document_to_edit->file.'"'
+            ]);            
+            
+
         }
 
         $this->DocName=$this->type->name;
@@ -64,18 +78,24 @@ class Applicant extends Component
         $this->expiry=($this->expiry>0)?$this->expiry:120;
         $this->expiry = $exDate->addMonths($this->expiry);    
 
-        $validatedData['file'] = $this->file->store('files', 'public');
-        
+        //$validatedData['file'] = $this->file->store('files', 'public');
+
+        $validatedData['file'] = Storage::disk('public')->put('files', $validatedData['file']);
+
         $data=['file'=> $validatedData['file'],
             'code_id'=> $this->type->id,
             'user_id'=>auth()->user()->id,
             'state'=>0,
             'expiration'=>$this->expiry,
         ];
-
+        
         if ($this->document_to_edit)    
-        {
-            $regre=Storage::disk('public')->delete(public_path("/storage/".$this->document_to_edit->file));
+        { 
+            if (Storage::disk('public')->exists($this->document_to_edit->file)){
+                
+                $regre=Storage::disk(name:'public')->delete($this->document_to_edit->file);
+            }
+             
             $this->document_to_edit->fill($data);
             $this->document_to_edit->save();
         }

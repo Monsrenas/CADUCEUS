@@ -25,6 +25,8 @@
   <div class="w-full p-2 bg-gray-300 mt-2 text-black">
       
         <span class="font-semibold">Status:</span>  {{$staText[$document_to_edit->state]}}
-      
+        @json($prvw);
   </div>
+
+  
 @endif
