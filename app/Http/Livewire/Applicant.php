@@ -41,10 +41,10 @@ class Applicant extends Component
 
             $path =public_path("/storage/".$this->document_to_edit->file);
             
-            $this->preview= Response::make(file_get_contents($path), 200, [
+            /*$this->preview= Response::make(file_get_contents($path), 200, [
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'inline; filename="'.$this->document_to_edit->file.'"'
-            ]);            
+            ]);  */          
             
 
         }
