@@ -41,7 +41,7 @@
                             class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
                             Edit
                         </a>
-                        @if ((!isset($item->register)) or (count($item->register)<=0))
+                        @if (( !isset($item->documents) )or (count($item->documents)==0))
                         <a wire:click="confirmDelete({{ $item->id }})" 
                             class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
                             Delete 

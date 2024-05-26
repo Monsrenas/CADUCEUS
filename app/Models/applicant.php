@@ -23,4 +23,9 @@ class applicant extends Model
         return $this->hasOne(reference::class,'applicant_id');
     }
 
+    public function documents() 
+    {
+        return $this->hasMany(documents::class,'user_id','user_id');
+    }
+
 }
