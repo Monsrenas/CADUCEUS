@@ -4,12 +4,12 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\applicant;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Mail;
 
-class Requests extends Component
+class Users extends Component
 {
 
     public $postToEdit="", $xOpen=false;
@@ -18,14 +18,14 @@ class Requests extends Component
 
     public function render()
     {
-        $lista=applicant::paginate(6);
+        $lista=user::where('role','<>','3')->paginate(6);
         
-        return view('livewire.requests', compact('lista'));
+        return view('livewire.users', compact('lista'));
     }
     
     public function new(){
     
-        $this->reset('postToEdit');
+        $this->reset();
         $this->xOpen = true;
     }
 
@@ -41,16 +41,11 @@ class Requests extends Component
                             'password' => Hash::make($this->tmpPassword),
                             'name'=>$this->name,
                             'email'=>$this->email,
-                            'role'=>'3'
+                            'role'=>$vldt['typeJob']
                             ];
                     $this->postToEdit=User::create($datos);
-                    $applicant=applicant::create([
-                                                    'user_id' => $this->postToEdit->id,
-                                                    'type_of_job'=>$this->typeJob,
-                                                    'process_state'=>"0"
-                                                ]);
                  
-                 $this->SendMail();
+                    $this->SendMail();
     
                 }
                 else
@@ -58,50 +53,42 @@ class Requests extends Component
                         $datos=[
                             'name'=>$this->name,
                             'email'=>$this->email,
+                            'role'=>$this->typeJob
                         ];
-                        $this->postToEdit->fill(['type_of_job'=>$this->typeJob]);
-                        $this->postToEdit->save();
-
-                        $user=User::find($this->postToEdit->user_id);
+                        $user=User::find($this->postToEdit->id);
                         $user->fill($datos);
                         $user->save();
                         $this->reset();
                     }
 
             $this->xOpen = false;
-            
         }
     }
 
     public function edit($postId){
-        $this->postToEdit = applicant::find($postId);
+        $this->postToEdit = User::find($postId);
 
         if ($this->postToEdit) {
-            $this->typeJob=$this->postToEdit->type_of_job;
-            $user=User::find($this->postToEdit->user_id);
-            $this->name=$user->name;
-            $this->email=$user->email;
+            $this->typeJob=$this->postToEdit->role;
+            $this->name=$this->postToEdit->name;
+            $this->email=$this->postToEdit->email;
         }
         
         $this->xOpen = true; 
-
     }
 
     
     public function confirmDelete($postId){
-        $this->postIdToDelete = $postId;
-        $PtoDel= applicant::find($postId);
-        $this->nameToDelete=User::find($PtoDel->user_id)->name;
+        $this->nameToDelete=User::find($postId)->name;
         $this->showDeleteModal = true;
+        $this->postIdToDelete=$postId;
     }
 
     public function deletePost(){
         if ($this->postIdToDelete) {
-            $post = applicant::find($this->postIdToDelete);
+            $post = User::find($this->postIdToDelete);
             if ($post) {
-                $user=User::find($post->user_id);
-                $post->delete();
-                $user->delete();
+                $post->delete(); 
             }
         }
 
@@ -112,7 +99,7 @@ class Requests extends Component
     public function SendMail()
     {
   
-        Mail::send('emails.applicant-mail',
+        Mail::send('emails.new-user-mail',
         array(
             'name' => $this->name,
             'email' => $this->email,
@@ -122,7 +109,7 @@ class Requests extends Component
             ),
             function($message){
                 $message->from('references@tcihospital.tc','InterHealthCanada');
-                $message->to($this->email, $this->name )->subject('Start of the accreditation process');
+                $message->to($this->email, $this->name )->subject('You have been registered as a new user in the CADUCEUS system');
             }
         );
 

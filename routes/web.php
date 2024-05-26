@@ -53,4 +53,11 @@ Route::middleware([
         }
         return view('dashboard', ['xcomponent' => 'nomenclature']);
     })->name('nomenclature');
+
+    Route::get('/user', function () {
+        if (auth()->user()->role==3){
+            return redirect()->route('user');
+        }
+        return view('dashboard', ['xcomponent' => 'users']);
+    })->name('user');
 });
