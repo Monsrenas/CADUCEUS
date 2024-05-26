@@ -59,11 +59,15 @@
                     </x-slot>
 
                     <x-slot name='footer'>
-                            
-                        <x-secondary-button wire:click="save" wire:loading.attr="disabled">
-                            Save
-                        </x-secondary-button>
-                        
+                        @if ($this->editReference)    
+                            <x-secondary-button wire:click="Save_reference" wire:loading.attr="disabled">
+                                Save
+                            </x-secondary-button>
+                        @else
+                            <x-secondary-button wire:click="save" wire:loading.attr="disabled">
+                                Save
+                            </x-secondary-button>
+                        @endif
                     </x-slot>
         </x-dialog-modal>  
     </div>

@@ -12,7 +12,7 @@
                 <th class="text-center" width="10%">Name</th>
 
                 <td class="text-center p-1 w-full" >
-                    <input type="text" class="w-full" style="font-size:0.6rem" wire:model='field.1.{{$i}}.1'  />
+                    <input type="text" class="w-full"  wire:model='field.1.{{$i}}.1'  />
                 </td>
                 <td rowspan="2"><button class="bg-gray-300 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">📨</button></td>
                 <td rowspan="2"><button class="bg-gray-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">🗑</button></td>
@@ -21,7 +21,7 @@
             <tr>    
                 <th>Email</th>
                 <td class="text-center p-1">
-                    <input type="email" class="w-full" style="font-size:0.8rem"  wire:model='field.1.{{$i}}.2' />
+                    <input type="email" class="w-full" wire:model='field.1.{{$i}}.2' />
                 </td>
                
             </tr>

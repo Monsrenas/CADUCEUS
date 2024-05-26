@@ -17,4 +17,10 @@ class applicant extends Model
     {
         return $this->hasOne(user::class,'id','user_id');
     }
+
+    public function reference() 
+    {
+        return $this->hasOne(reference::class,'applicant_id');
+    }
+
 }

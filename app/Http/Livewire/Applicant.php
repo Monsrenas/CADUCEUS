@@ -18,13 +18,17 @@ class Applicant extends Component
     private $preview=null;
     public $open=false, $doc_list=[];
     public $DocName="", $modelFile, $document_to_edit=null, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[],
-           $editReference=false, $field=[];
+           $editReference=false, $field=[], $persons=0;
 
     public function render()
     {
         $this->docList();
         $doc_list=$this->doc_list;
         $prvw=$this->preview;
+        if (auth()->user()->applicant->reference){
+            $this->persons=count(json_decode(auth()->user()->applicant->reference->persons, true));
+        }
+        
         return view('livewire.applicant', compact('doc_list','prvw'));
     }
 
@@ -52,6 +56,14 @@ class Applicant extends Component
 
     public function ReferenceDetail()
     {
+
+        $Applicant= ('App\Models\\applicant')::where('user_id',auth()->user()->id)->first();
+        if ($Applicant->reference)
+        {
+            $this->field=json_decode($Applicant->reference->persons,true);
+       
+        }
+
         $this->editReference=true;
 
         $this->open=true;
@@ -99,6 +111,24 @@ class Applicant extends Component
         else {documents::create($data);}
     
         session()->flash('message', 'File successfully Uploaded.');
+        $this->reset();
+    }
+
+    public function Save_reference()
+    {
+        $Applicant= ('App\Models\\applicant')::where('user_id',auth()->user()->id)->first();
+        $data=['applicant_id'=>$Applicant->id,
+        'persons'=>json_encode($this->field)];
+
+        if ($Applicant->reference)
+        {
+            $refPer=('App\Models\\reference')::find($Applicant->reference->id);
+            $refPer->fill($data);
+            $refPer->save();
+        } else {
+            ('App\Models\\reference')::create($data);
+        }
+
         $this->reset();
     }
 

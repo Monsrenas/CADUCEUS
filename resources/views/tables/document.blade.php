@@ -4,7 +4,7 @@
                     <div wire:click="ReferenceDetail" class="card font-medium text-sm" style="background: blue; display: grid; grid-template-columns: 9fr 1fr;" >
                         List of people for reference letters
                                     <div style=" text-aling:center; font-size:.8em; color:yellow" > 
-                                        0 of 3
+                                    {{ $persons}} of 3
                                     </div>
                     </div>        
                     
