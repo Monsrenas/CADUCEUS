@@ -6,10 +6,13 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> 
         <div class="w-full  flow-root">
-           
+           @if ($postToEdit)
+                @include('tables.applicant_document')
+           @else
             @if ($lista)
                 @include('tables.review' )
             @endif
+           @endif 
         </div>     
         
     </div>

@@ -31,10 +31,8 @@ class Users extends Component
 
     public function save() {
         
-        $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
-        if (isset($vldt['typeJob'])){
-              
-                if ($this->postToEdit=="") {
+                if (!$this->postToEdit) {
+                    $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
                     $this->tmpPassword=Str::random(8);
                     
                     $datos=[
@@ -49,20 +47,21 @@ class Users extends Component
     
                 }
                 else
+                    if ($this->postToEdit->email<>$this->email) {}
                     {
                         $datos=[
                             'name'=>$this->name,
                             'email'=>$this->email,
                             'role'=>$this->typeJob
                         ];
-                        $user=User::find($this->postToEdit->id);
-                        $user->fill($datos);
-                        $user->save();
+                        
+                        $this->postToEdit->fill($datos);
+                        $this->postToEdit->save();
                         $this->reset();
                     }
 
             $this->xOpen = false;
-        }
+        
     }
 
     public function edit($postId){

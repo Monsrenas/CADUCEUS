@@ -33,7 +33,7 @@ class Review extends Component
     public function Applicant_details($id)
     {
         $this->postToEdit=applicant::find($id);
-        $this->xOpen = true; 
+        //$this->xOpen = true; 
         $this->doc_list=$this->postToEdit->documents;
         $this->nameToEdit=$this->postToEdit->user->name;
     }
@@ -45,11 +45,15 @@ class Review extends Component
             $this->typeJob=$this->postToEdit->type_of_job;
             $user=User::find($this->postToEdit->user_id);
             $this->nameToEdit=$user->name;
-             dd($this->nameToEdit);
         }
         
-        $this->xOpen = true; 
+        //$this->xOpen = true; 
 
+    }
+
+    public function closeDetail()
+    {
+        $this->reset('postToEdit','nameToEdit');
     }
 
 }
