@@ -25,21 +25,23 @@
         @endif
     </x-slot>
     <x-slot name='footer'>
-        
-    <div class="inline-flex w-full">
-        @foreach ($staText as $itm)
-            
-            <x-label value="{{$itm}}" />
-            <x-input type="radio" class="w-full" wire:model='file' />
-        @endforeach
-    </div>   
-    
-    <div class="inline-flex w-full">
-        <textarea name="comment" id="" class="w-full min-h-1 m-1"></textarea>
-        <x-secondary-button wire:click="sendCommend" wire:loading.attr="disabled" class="mt-2 mb-2 h-min">
-            Comment
-        </x-secondary-button>
-    </div>
-        
+    <div class="grab  w-full" >    
+        <div class="inline-flex w-full">
+            @foreach ($staText as $itm)
+                <div class="m-2 w-full inline-flex">
+                    
+                    <x-input type="radio" class="m-1" wire:model='file' />
+                    <x-label value="{{$itm}}" />
+                </div>
+            @endforeach
+        </div>   
+        <br>
+        <div class="inline-flex w-full">
+            <textarea name="comment" id="" class="w-full min-h-1 m-1"></textarea>
+            <x-secondary-button wire:click="sendCommend" wire:loading.attr="disabled" class="mt-2 mb-2 h-min">
+                Comment
+            </x-secondary-button>
+        </div>
+        </div>   
     </x-slot>
 </x-dialog-modal>  
