@@ -43,6 +43,7 @@ class Review extends Component
         $this->docToView = documents::find($postId);
 
         $this->docToView->file=asset('storage/'.$this->docToView->file);
+         
         $this->xOpen = true; 
 
     }
