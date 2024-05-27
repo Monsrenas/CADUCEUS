@@ -14,7 +14,7 @@
             @endif
            @endif 
         </div>     
-        
+      
     </div>
     
     
@@ -29,7 +29,12 @@
             </x-slot>
 
             <x-slot name='content'>
-                @include('tables.applicant_document')
+                @if (isset($docToView->file))
+                     
+                <iframe src="{{$docToView->file}}" style="border: none;" class="w-full h-full">
+
+                </iframe>
+                @endif
             </x-slot>
 
             <x-slot name='footer'>

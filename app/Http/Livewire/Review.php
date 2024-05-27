@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\applicant;
 use App\Models\documents;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Mail;
@@ -15,7 +16,8 @@ class Review extends Component
 
     public $postToEdit="", $xOpen=false;
     public $typeJob="",$name, $email="", $tmpPassword="";
-    public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false;
+    public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
+           $docToView=[];
 
     public function render()
     {
@@ -33,27 +35,21 @@ class Review extends Component
     public function Applicant_details($id)
     {
         $this->postToEdit=applicant::find($id);
-        //$this->xOpen = true; 
         $this->doc_list=$this->postToEdit->documents;
         $this->nameToEdit=$this->postToEdit->user->name;
     }
 
-    public function edit($postId){
-        $this->postToEdit = applicant::find($postId);
+    public function ViewDoc($postId){
+        $this->docToView = documents::find($postId);
 
-        if ($this->postToEdit) {
-            $this->typeJob=$this->postToEdit->type_of_job;
-            $user=User::find($this->postToEdit->user_id);
-            $this->nameToEdit=$user->name;
-        }
-        
-        //$this->xOpen = true; 
+        $this->docToView->file=asset('storage/'.$this->docToView->file);
+        $this->xOpen = true; 
 
     }
 
     public function closeDetail()
     {
-        $this->reset('postToEdit','nameToEdit');
+        $this->reset();
     }
 
 }
