@@ -60,4 +60,11 @@ Route::middleware([
         }
         return view('dashboard', ['xcomponent' => 'users']);
     })->name('user');
+
+    Route::get('/review', function () {
+        if (auth()->user()->role==3){
+            return redirect()->route('review');
+        }
+        return view('dashboard', ['xcomponent' => 'review']);
+    })->name('review');
 });
