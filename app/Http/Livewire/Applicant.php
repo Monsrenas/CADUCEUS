@@ -52,8 +52,8 @@ class Applicant extends Component
         $this->attr= json_decode($this->type->atributes,true);
         $this->modelFile=$this->type->models;
         $this->open=true;
-        
     }
+
 
     public function ReferenceDetail()
     {
@@ -131,6 +131,15 @@ class Applicant extends Component
         }
 
         $this->reset();
+    }
+
+    public function readed($id)
+    {
+         
+        $cmm=('App\Models\\comments')::find($id);
+        $cmm->fill(['read'=>true]);
+        $cmm->save();
+        $this->docList();
     }
 
     public function donwload()

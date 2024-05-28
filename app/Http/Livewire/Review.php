@@ -58,7 +58,7 @@ class Review extends Component
          comments::create($data);
         $this->reset('xComment');
     }
-
+    
     public function closeDetail()
     {
         $this->reset();

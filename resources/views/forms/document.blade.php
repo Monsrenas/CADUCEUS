@@ -47,14 +47,12 @@
   @if  (($document_to_edit->comments) and (count($document_to_edit->comments)>0))
     <p class="text-xl mt-4">Review Comments</p>
     @foreach ($document_to_edit->comments->sortByDesc('created_at') as $cmts)
-        <div>
-         <p class="font-extrabold"> 
+        <div class="pl-4 cursor-pointer" wire:click="readed({{$cmts->id}})">
+         <p @if (!$cmts->read) class="font-extrabold" @endif > 
            <span class="text-blue-400"> {{date('d-m-Y h:i:s',strtotime($cmts->created_at))}}</span>> 
            {{$cmts->text}}
-
          </p>
         </div>
     @endforeach   
-    > 
   @endif
 @endif
