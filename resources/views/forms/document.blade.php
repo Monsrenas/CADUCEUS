@@ -1,5 +1,5 @@
 <?php
-  $staText=["awaiting review","With signs", "Approved", "Rejected"];
+  $staText=["awaiting review","Under review", "Approved", "Rejected"];
   $FileAcc=[".pdf","image/*"];
   $atrb=(isset($attr[1]))?$attr[1]:0;
 ?>

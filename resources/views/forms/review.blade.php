@@ -8,7 +8,7 @@
             <div class="inline-flex w-full  align-middle">
                 <p class="uppercase px-4 text-xl">  <span  class='text-blue-700  font-extrabold'>{{$nameToEdit}}</span></p>
                 <div class="float-right inline-flex align-middle ml-20 m-auto">
-                    <input type="checkbox" class="mr-2"  wire:model='rvwStart'>
+                    <input type="checkbox" class="mr-2"  wire:model='rvwStart' checked>
                     <p>Review started</p>
                 </div>
             </div>

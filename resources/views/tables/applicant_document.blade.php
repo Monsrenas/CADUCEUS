@@ -1,5 +1,5 @@
 @php
-    $staText=["awaiting review","With signs", "Approved", "Rejected"]
+    $staText=["awaiting review","Under review", "Approved", "Rejected"]
 @endphp
 <div class="relative h-fit shadow-md sm:rounded-lg">
   

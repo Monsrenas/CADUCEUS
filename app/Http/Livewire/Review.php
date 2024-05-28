@@ -42,7 +42,7 @@ class Review extends Component
 
     public function ViewDoc($postId){
         $this->docToView = documents::find($postId);
-
+        $this->rvwStart=($this->docToView->state>0);
         $this->docToView->file=asset('storage/'.$this->docToView->file);
          
         $this->xOpen = true; 
@@ -58,7 +58,14 @@ class Review extends Component
          comments::create($data);
         $this->reset('xComment');
     }
-    
+
+    public function updatedRvwStart($i)
+    {
+        $this->docToView->state=1;
+        $this->docToView->save();
+
+    }
+
     public function closeDetail()
     {
         $this->reset();
