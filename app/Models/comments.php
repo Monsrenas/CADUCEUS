@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class comments extends Model
 {
     use HasFactory;
-    protected $fillable = array('file',
-                                'code_id');
+    protected $fillable = array('document_id',
+                                'user_id',
+                                'text',
+                                'read');
 
 }

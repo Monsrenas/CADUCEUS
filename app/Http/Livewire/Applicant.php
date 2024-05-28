@@ -45,6 +45,7 @@ class Applicant extends Component
             $this->expiry=$creado->diffInMonths($expiry);
 
             $path =public_path("/storage/".$this->document_to_edit->file);
+
         }
 
         $this->DocName=$this->type->name;

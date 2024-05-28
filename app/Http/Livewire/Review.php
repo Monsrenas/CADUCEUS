@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\applicant;
 use App\Models\documents;
+use App\Models\comments;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class Review extends Component
     public $postToEdit="", $xOpen=false;
     public $typeJob="",$name, $email="", $tmpPassword="";
     public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
-           $docToView=[];
+           $docToView=[], $field="", $rvwStart=false, $xComment="";
 
     public function render()
     {
@@ -46,6 +47,16 @@ class Review extends Component
          
         $this->xOpen = true; 
 
+    }
+
+    public function sendComment()
+    {
+        $data=['document_id'=>$this->docToView->id,
+        'user_id'=>auth()->user()->id,
+        'text'=>$this->xComment,
+        'read'=>false];
+         comments::create($data);
+        $this->reset('xComment');
     }
 
     public function closeDetail()

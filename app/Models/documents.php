@@ -22,4 +22,9 @@ class documents extends Model
     {
         return $this->hasOne(user::class,'id','user_id');
     }
+
+    public function comments() 
+    {
+        return $this->hasMany(comments::class,'document_id','id');
+    }
 }
