@@ -5,9 +5,9 @@
 <x-dialog-modal wire:model="xOpen">
     <x-slot name='title'>
         <div class="mt-4">
-            <div class="inline-flex w-full  align-middle">
-                <p class="uppercase px-4 text-xl">  <span  class='text-blue-700  font-extrabold'>{{$nameToEdit}}</span></p>
-                <div class="float-right inline-flex align-middle ml-20 m-auto">
+            <div class="flex w-full  align-middle">
+                <p class="uppercase  text-xl">  <span  class='text-blue-700  font-extrabold'>{{$nameToEdit}}</span></p>
+                <div class="flex align-middle ml-20 ">
                     <input type="checkbox" class="mr-2"  wire:model='rvwStart' checked>
                     <p>Review started</p>
                 </div>
