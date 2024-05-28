@@ -17,19 +17,36 @@
                             
                         @if (isset($ind->documents)and(count($ind->documents)>0))
                             @foreach ($ind->documents as $xdoc )
-                                <div wire:click="DocDetail('{{$xdoc->id}}','{{$ind->id}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr;" >
+                                <div wire:click="DocDetail('{{$xdoc->id}}','{{$ind->id}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr 1fr;" >
                                     {{$ind->name}}
+                                    <?php 
+                                        $noti=('App\Models\\comments')::where('document_id',$xdoc->id)->
+                                        where('read',0)->get();
+                                    ?>
+                                   
+                                    <div style="font-size:.6em;" 
+                                         class="text-center bg-red-500 align-middle rounded-full" > 
+                                         @if (count($noti)>0)
+                                        <span class="flex  justify-center align-middle font-extrabold">
+                                             
+                                              {{count($noti)}}
+                                            
+                                            
+                                        </span>
+                                        @endif
+                                    </div>
+                                   
+                                    
                                     <div style=" text-aling:center; font-size:1.6em;" > 
                                         &#{{$status[$xdoc->state]}}; 
                                     </div>
-                                </div>      
+                                </div>    
+                                   
                                 @endforeach 
                             @else
                                 <div wire:click="DocDetail('','{{$ind->id}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr;" >
                                     {{$ind->name}}
-                                    <div style=" text-aling:center; font-size:1.6em;" > 
-                                         
-                                    </div>
+                                    
                                 </div>    
                             @endif    
                     @endforeach

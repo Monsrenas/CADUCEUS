@@ -19,9 +19,8 @@
     </x-slot>
     <x-slot name='content'>
         @if (isset($docToView->file))
-          {{$this->docToView->file}}
-        <iframe src="{{$docToView->file}}" style="border: none; " class="w-full min-h-80" wire:ignore>
-        </iframe>
+            <iframe src="{{$docToView->file}}" style="border: none; " class="w-full min-h-80" wire:ignore>
+            </iframe>
         @endif
     </x-slot>
     <x-slot name='footer'>
