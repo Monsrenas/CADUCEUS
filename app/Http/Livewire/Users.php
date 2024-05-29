@@ -12,7 +12,7 @@ use Mail;
 class Users extends Component
 {
 
-    public $postToEdit="", $xOpen=false;
+    public $postToEdit="", $xOpen=false, $xAccess=[]; 
     public $typeJob="",$name, $email="", $tmpPassword="";
     public $postIdToDelete="", $nameToDelete="", $showDeleteModal=false;
 
@@ -30,7 +30,7 @@ class Users extends Component
     }
 
     public function save() {
-        
+                
                 if (!$this->postToEdit) {
                     $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
                     $this->tmpPassword=Str::random(8);
@@ -39,7 +39,8 @@ class Users extends Component
                             'password' => Hash::make($this->tmpPassword),
                             'name'=>$this->name,
                             'email'=>$this->email,
-                            'role'=>$vldt['typeJob']
+                            'role'=>$vldt['typeJob'],
+                            'access'=>json_encode($this->xAccess)
                             ];
                     $this->postToEdit=User::create($datos);
                  
@@ -47,18 +48,20 @@ class Users extends Component
     
                 }
                 else
+                {
                     if ($this->postToEdit->email<>$this->email) {}
                     {
                         $datos=[
                             'name'=>$this->name,
                             'email'=>$this->email,
-                            'role'=>$this->typeJob
+                            'role'=>$this->typeJob,
+                            'access'=>json_encode($this->xAccess)
                         ];
-                        
+                    }   
                         $this->postToEdit->fill($datos);
                         $this->postToEdit->save();
                         $this->reset();
-                    }
+                }
 
             $this->xOpen = false;
         
@@ -71,6 +74,7 @@ class Users extends Component
             $this->typeJob=$this->postToEdit->role;
             $this->name=$this->postToEdit->name;
             $this->email=$this->postToEdit->email;
+            $this->xAccess=json_decode($this->postToEdit->access, true);
         }
         
         $this->xOpen = true; 

@@ -1,4 +1,10 @@
 
+<?php 
+    $access=["Requests", "Resources", "Review", "Users"];
+    $defaul=[[true,true,true,true],[true,true,false,false],[false,false,true,false]];
+    if ($typeJob) $xAccess=$defaul[$typeJob];
+?>
+
 <x-label value="Type of user" />
 
 <select   wire:model='typeJob' 
@@ -20,3 +26,15 @@
 
 
 
+@if ($typeJob<>"") 
+    <p class="text-xl mt-4 font-bold">Access level</p>
+    @foreach ($access as $ind=>$acc)
+        <div class="inline-flex m-2">
+        <x-input type="checkbox" class="m-1" wire:model='xAccess.{{$ind}}' />
+        <x-label value="{{$acc}}" />
+        </div>
+    @endforeach
+    <?php 
+        if (!$xAccess) $this->xAccess=$defaul[$typeJob];
+    ?>
+@endif
