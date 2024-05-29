@@ -10,6 +10,10 @@
                     </a>
                 </div>
 
+                <?php
+                    $mAccess=json_decode (auth()->user()->access,true);
+                ?>    
+                
                 <!-- Navigation Links -->
                 @if (auth()->user()->role==3)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -18,26 +22,32 @@
                         </x-nav-link>
                     </div> 
                 @endif
-
-                @if (auth()->user()->role<>3)
+                
+                @if ((!$mAccess) or ($mAccess[0]) )
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('requests') }}" :active="request()->routeIs('requests')">
                             {{ __('Requests') }}
                         </x-nav-link>
                     </div>
-
+                @endif
+                
+                @if ((!$mAccess) or ($mAccess[2]))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('resources') }}" :active="request()->routeIs('resources')">
                             {{ __('Resources') }}
                         </x-nav-link>
                     </div>
-
+                @endif
+                
+                @if ((!$mAccess) or ($mAccess[3]))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('review') }}" :active="request()->routeIs('review')">
                             {{ __('Review') }}
                         </x-nav-link>
                     </div>
-
+                @endif
+                
+                @if ((!$mAccess) or ($mAccess[3]))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                             {{ __('Users') }}
