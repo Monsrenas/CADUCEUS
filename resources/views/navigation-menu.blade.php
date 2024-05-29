@@ -31,7 +31,7 @@
                     </div>
                 @endif
                 
-                @if ((!$mAccess) or ($mAccess[2]))
+                @if ((!$mAccess) or ($mAccess[1]))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('resources') }}" :active="request()->routeIs('resources')">
                             {{ __('Resources') }}
@@ -39,7 +39,7 @@
                     </div>
                 @endif
                 
-                @if ((!$mAccess) or ($mAccess[3]))
+                @if ((!$mAccess) or ($mAccess[2]))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('review') }}" :active="request()->routeIs('review')">
                             {{ __('Review') }}
