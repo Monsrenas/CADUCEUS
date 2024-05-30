@@ -11,10 +11,10 @@
                     User name
                 </th>
                 <th>
-                    Type
+                    Role
                 </th>
                 <th class="text-center" >Email</th>
-                <th class="px-2 py-3 text-center">Status</th>
+                
                 <th class="px-2 py-3 text-center">Actions</th>
             </tr>
         </thead>
@@ -33,17 +33,24 @@
                     <td class="text-left">
                         {{$item["email"]}}                    
                     </td>
-                    <td>
-                        
-                    </td>
+                   
                     <td class="px-6 text-center">
+
+                    @if ((auth()->user()->id<>$item->id))
                         <a wire:click="edit({{ $item->id }})"
-                            class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
+                            class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-5  text-center mr-2 cursor-pointer">
                             Edit
                         </a>
+
+                        <a wire:click="ResetPassword({{ $item->id }})" 
+                            class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 cursor-pointer">
+                            Reset Password 
+                        </a>
+                        @endif
+
                         @if ((auth()->user()->id<>$item->id) and (!isset($item->applicant)))
                         <a wire:click="confirmDelete({{ $item->id }})" 
-                            class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
+                            class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 cursor-pointer">
                             Delete 
                         </a>
                         @endif

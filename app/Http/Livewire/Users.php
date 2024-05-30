@@ -86,6 +86,17 @@ class Users extends Component
         $this->showDeleteModal = true;
         $this->postIdToDelete=$postId;
     }
+    public function ResetPassword($postId)
+    {
+        $this->edit($postId);
+        $this->xOpen = false;
+        $this->tmpPassword=Str::random(8);
+        $datos=[
+            'password' => Hash::make($this->tmpPassword),
+            ];
+        $this->save();
+        session()->flash('message', 'Password successfully reseted.');
+    }
 
     public function deletePost(){
         if ($this->postIdToDelete) {
