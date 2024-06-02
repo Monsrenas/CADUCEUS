@@ -10,7 +10,10 @@
                     </a>
                 </div>
 
-                <?php $mAccess=json_decode (auth()->user()->access,true);?>    
+                <?php $mAccess=json_decode (auth()->user()->access,true);
+                      if ($mAccess)  $mAccess=array_pad($mAccess, 4, false);
+                ?>   
+                 
                 
                 <!-- Navigation Links -->
                 @if (auth()->user()->role==3)

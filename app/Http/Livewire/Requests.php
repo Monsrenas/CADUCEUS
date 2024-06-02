@@ -30,11 +30,9 @@ class Requests extends Component
     }
 
     public function save() {
-        
-        $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
-        if (isset($vldt['typeJob'])){
               
-                if ($this->postToEdit=="") {
+                if (!$this->postToEdit) {
+                    $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
                     $this->tmpPassword=Str::random(8);
                     
                     $datos=[
@@ -51,10 +49,16 @@ class Requests extends Component
                                                 ]);
                  
                  $this->SendMail();
-    
+                 $this->dispatchBrowserEvent('message', [
+                    'body' => 'Applicant information has been registered. An email was sent to the applicant with the information to access the platform.',
+                    'timeout' => 6000 ]);
                 }
                 else
                     {
+                        if ($this->postToEdit->user->email<>$this->email) {
+                            $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
+                        }
+
                         $datos=[
                             'name'=>$this->name,
                             'email'=>$this->email,
@@ -66,11 +70,15 @@ class Requests extends Component
                         $user->fill($datos);
                         $user->save();
                         $this->reset();
+
+                        $this->dispatchBrowserEvent('message', [
+                            'body' => 'Applicant information was successfully updated',
+                            'timeout' => 6000 ]);
                     }
 
             $this->xOpen = false;
             
-        }
+        
     }
 
     public function edit($postId){

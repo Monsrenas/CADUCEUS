@@ -35,6 +35,6 @@
         </div>
     @endforeach
     <?php 
-        if (!$xAccess) $this->xAccess=$defaul[$typeJob];
+        if (!$this->xAccess) $this->xAccess=$defaul[$typeJob];
     ?>
 @endif

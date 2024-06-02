@@ -45,22 +45,33 @@ class Users extends Component
                     $this->postToEdit=User::create($datos);
                  
                     $this->SendMail();
+
+                    $this->dispatchBrowserEvent('message', [
+                        'body' => 'The user has been created successfully. An email was sent with the information and the access link.',
+                        'timeout' => 6000 ]);
+            
     
                 }
                 else
                 {
-                    if ($this->postToEdit->email<>$this->email) {}
-                    {
-                        $datos=[
-                            'name'=>$this->name,
-                            'email'=>$this->email,
-                            'role'=>$this->typeJob,
-                            'access'=>json_encode($this->xAccess)
-                        ];
-                    }   
-                        $this->postToEdit->fill($datos);
-                        $this->postToEdit->save();
-                        $this->reset();
+                    if ($this->postToEdit->email<>$this->email) {
+                        $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
+                    }
+                    
+                    $datos=[
+                        'name'=>$this->name,
+                        'email'=>$this->email,
+                        'role'=>$this->typeJob,
+                        'access'=>json_encode($this->xAccess)
+                    ];
+                      
+                    $this->postToEdit->fill($datos);
+                    $this->postToEdit->save();
+                    $this->reset();
+                    
+                    $this->dispatchBrowserEvent('message', [
+                        'body' => 'The information was successfully updated',
+                        'timeout' => 4000 ]);
                 }
 
             $this->xOpen = false;
@@ -95,7 +106,12 @@ class Users extends Component
             'password' => Hash::make($this->tmpPassword),
             ];
         $this->save();
-        session()->flash('message', 'Password successfully reseted.');
+         
+        $this->dispatchBrowserEvent('message', [
+            'body' => 'Password successfully reseted.',
+            'timeout' => 4000 ]);
+
+        $this->render();
     }
 
     public function deletePost(){
@@ -108,6 +124,11 @@ class Users extends Component
 
         $this->reset('postIdToDelete','nameToDelete');
         $this->showDeleteModal = false;
+    }
+
+    public function updatedTypeJob()
+    {
+        $this->reset('xAccess');
     }
 
     public function SendMail()
