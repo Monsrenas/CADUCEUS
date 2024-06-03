@@ -55,7 +55,8 @@ class Resources extends Component
         if (isset($vldt['field'])){
                 for ($i = 1; $i <= count($this->field); $i++) {
                     if (gettype($this->field[$i])=="array") {$this->field[$i]=json_encode($this->field[$i]);}
-                    $datos[$this->columna[$i-1]]=$this->field[$i]; 
+                    if ((isset($this->columna[$i-1])) and (isset($this->field[$i]))) 
+                    {$datos[$this->columna[$i-1]]=$this->field[$i]; }
                 }
                 if ($this->postToEdit=="") {
                     $this->postToEdit=($this->modelo)::create($datos);

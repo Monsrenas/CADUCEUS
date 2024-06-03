@@ -1,6 +1,8 @@
 @php
     $status=["Started","Under review","Approved","Rejected"];
     $TOJ=["Full time","Locum","Visiting"];
+    $Lvl=["Medical Services","Clinical Service",
+          "Allies Services","Human Resources"];
 @endphp
 <div class="relative h-fit shadow-md sm:rounded-lg">
     
@@ -10,8 +12,11 @@
                 <th class="px-2 py-3 text-center">
                     Applicant name
                 </th>
-                <th>
+                <th class="text-center">
                     Type
+                </th>
+                <th class="text-center">
+                    Group
                 </th>
                 <th class="text-center" >Email</th>
                 <th class="px-2 py-3 text-center">Application Status</th>
@@ -21,6 +26,9 @@
         <tbody>
             
             @foreach ($lista as $item)
+                <?php
+                    $mAccess=json_decode ($item->user->access,true);
+                ?>
                 <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
                     
                     <td scope="col" class="px-2 py-3 text-left">
@@ -30,7 +38,12 @@
                       {{$TOJ[$item["type_of_job"]]}}
                     
                     </td>
-                    <td class="text-left">
+                    <td>
+                        @if (isset($mAccess[9]))                       
+                            <span >{{$Lvl[$mAccess[9]]}}</span>   
+                        @endif
+                    </td>
+                    <td class="text-center">
                         {{$item["user"]->email}}                    
                     </td>
                     <td>

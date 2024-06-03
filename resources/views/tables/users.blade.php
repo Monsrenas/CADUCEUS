@@ -1,16 +1,21 @@
 @php
     $status=["Started","Under review","Approved","Rejected"];
     $TOJ=["Administrator","Leader SMT","Committe member"];
+    $Lvl=[[],["Chief of Medical Services","Chief of Clinical Service",
+          "Chief of Allies Services"],
+          ["Medical Services","Clinical Service",
+          "Allies Services","Human Resources"]];
+
 @endphp
 <div class="relative h-fit shadow-md sm:rounded-lg">
     
-    <table class="w-full text-sm text-left text-gray-500">
+    <table class="w-full text-sm text-left text-gray-500 table-auto">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th class="px-2 py-3 text-center">
                     User name
                 </th>
-                <th>
+                <th class="px-2 py-3 text-center">
                     Role
                 </th>
                 <th class="text-center" >Email</th>
@@ -21,14 +26,18 @@
         <tbody>
             
             @foreach ($lista as $item)
+                <?php $mAccess=json_decode ($item["access"],true); ?>
                 <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
                     
                     <td scope="col" class="px-2 py-3 text-left">
                         {{$item["name"]}}
                     </td>
                     <td class="text-left">
-                      {{$TOJ[$item["role"]]}}
-                    
+                      <span class="text-green-600">{{$TOJ[$item["role"]]}}</span>
+                      @if (isset($mAccess[9]))
+                       
+                      <span class="text-xs">{{$Lvl[$item->role][$mAccess[9]]}}</span>   
+                      @endif
                     </td>
                     <td class="text-left">
                         {{$item["email"]}}                    

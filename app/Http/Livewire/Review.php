@@ -18,11 +18,17 @@ class Review extends Component
     public $postToEdit="", $xOpen=false;
     public $typeJob="",$name, $email="", $tmpPassword="";
     public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
-           $docToView=[], $field="", $rvwStart=false, $xComment="";
+           $docToView=[], $field="", $rvwStart=false, $xComment="",$xGroup="";
 
     public function render()
     {
-        $lista=applicant::paginate(6);
+        $xGroup=$this->xGroup;   
+         
+        $lista=User::whereHas('applicant')->when($this->xGroup<>'', function ($query) use ($xGroup) {
+            $query->whereJsonContains('access->9', $xGroup);
+        })->paginate(6);
+
+     
         $list_doc=$this->doc_list;
         return view('livewire.review', compact('lista','list_doc'));
     }
@@ -68,7 +74,6 @@ class Review extends Component
 
     public function closeDetail()
     {
-        $this->reset();
+        $this->reset('postToEdit','doc_list','nameToEdit');
     }
-
 }

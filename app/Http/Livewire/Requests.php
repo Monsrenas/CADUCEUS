@@ -12,7 +12,7 @@ use Mail;
 class Requests extends Component
 {
 
-    public $postToEdit="", $xOpen=false;
+    public $postToEdit="", $xOpen=false, $xAccess=[];
     public $typeJob="",$name, $email="", $tmpPassword="";
     public $postIdToDelete="", $nameToDelete="", $showDeleteModal=false;
 
@@ -25,21 +25,24 @@ class Requests extends Component
     
     public function new(){
     
-        $this->reset('postToEdit');
+        $this->reset();
         $this->xOpen = true;
     }
 
     public function save() {
               
                 if (!$this->postToEdit) {
-                    $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
+                    $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'],
+                    'xAccess'=> 'required',     
+                    'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
                     $this->tmpPassword=Str::random(8);
                     
                     $datos=[
                             'password' => Hash::make($this->tmpPassword),
                             'name'=>$this->name,
                             'email'=>$this->email,
-                            'role'=>'3'
+                            'role'=>'3',
+                            'access'=>json_encode($this->xAccess),
                             ];
                     $this->postToEdit=User::create($datos);
                     $applicant=applicant::create([
@@ -56,12 +59,15 @@ class Requests extends Component
                 else
                     {
                         if ($this->postToEdit->user->email<>$this->email) {
-                            $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
+                            $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'],
+                            'xAccess'=> 'required',
+                            'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
                         }
 
                         $datos=[
                             'name'=>$this->name,
                             'email'=>$this->email,
+                            'access'=>json_encode($this->xAccess)
                         ];
                         $this->postToEdit->fill(['type_of_job'=>$this->typeJob]);
                         $this->postToEdit->save();
@@ -89,6 +95,7 @@ class Requests extends Component
             $user=User::find($this->postToEdit->user_id);
             $this->name=$user->name;
             $this->email=$user->email;
+            $this->xAccess=json_decode($user->access, true);
         }
         
         $this->xOpen = true; 

@@ -57,18 +57,17 @@ class Users extends Component
                     if ($this->postToEdit->email<>$this->email) {
                         $vldt=$this->validate(['typeJob'=> 'required','name'=> ['required', 'string', 'max:255'], 'email'=> ['required', 'string', 'email', 'max:255', 'unique:users']]);
                     }
-                    
+                                            
                     $datos=[
                         'name'=>$this->name,
                         'email'=>$this->email,
                         'role'=>$this->typeJob,
                         'access'=>json_encode($this->xAccess)
                     ];
-                      
                     $this->postToEdit->fill($datos);
                     $this->postToEdit->save();
                     $this->reset();
-                    
+
                     $this->dispatchBrowserEvent('message', [
                         'body' => 'The information was successfully updated',
                         'timeout' => 4000 ]);
@@ -100,12 +99,11 @@ class Users extends Component
     public function ResetPassword($postId)
     {
         $this->edit($postId);
-        $this->xOpen = false;
+        $this->xOpen = false; 
         $this->tmpPassword=Str::random(8);
-        $datos=[
-            'password' => Hash::make($this->tmpPassword),
-            ];
-        $this->save();
+        $this->postToEdit->password=Hash::make($this->tmpPassword);
+        $this->postToEdit->save();
+        $this->SendMail(); 
          
         $this->dispatchBrowserEvent('message', [
             'body' => 'Password successfully reseted.',
@@ -133,7 +131,8 @@ class Users extends Component
 
     public function SendMail()
     {
-  
+        $type=[['emails.new-user-mail','You have been registered as a new user in the CADUCEUS system'],
+               ['emails.new-user-mail']];
         Mail::send('emails.new-user-mail',
         array(
             'name' => $this->name,
