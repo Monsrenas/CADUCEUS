@@ -37,7 +37,7 @@
                     $UserAccess=json_decode (auth()->user()->access,true);
                 ?>
                 <tr  
-                   @if (($UserAccess[9])and($UserAccess[9]==$mAccess[9]))     
+                   @if (isset($UserAccess[9])and($UserAccess[9]==$mAccess[9]))     
                     class="text-center border-b hover:bg-sky-200 hover:text-black "
                     wire:click="Applicant_details({{ $item->applicant->id }})"
                   @else
