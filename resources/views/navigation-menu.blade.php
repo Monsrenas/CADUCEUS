@@ -11,7 +11,12 @@
                 </div>
 
                 <?php $mAccess=json_decode (auth()->user()->access,true);
-                      if ($mAccess)  $mAccess=array_pad($mAccess, 4, false);
+                      if ($mAccess)  {
+                        for ($i=0; $i < 4; $i++) { 
+                            if (!$mAccess[i]){ $mAccess[i]=false;}
+                        }
+                            //$mAccess=array_pad($mAccess, 4, false);
+                      }
                 ?>   
                  
                 
