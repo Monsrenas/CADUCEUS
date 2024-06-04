@@ -21,7 +21,6 @@
                         $noti=('App\Models\\comments')::where('document_id',$xdoc->id)->
                         where('read',0)->get();
                     ?>
-                   
                     <div style="font-size:.6em;" 
                          class="text-center bg-red-500 align-middle rounded-full" > 
                          @if (count($noti)>0)
@@ -36,7 +35,7 @@
                     </div>
                 </div>    
                    
-                @endforeach 
+            @endforeach 
             @else
                 <div wire:click="DocDetail('','{{$ind->id}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr;" >
                     {{$ind->name}}

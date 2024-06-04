@@ -40,10 +40,10 @@ class Applicant extends Component
         $this->document_to_edit=documents::find($id);
         if ($this->document_to_edit)
         {
-            $creado = $this->document_to_edit->created_at;
-            $expiry = Carbon::parse($this->document_to_edit->expiration);
-            $this->expiry=$creado->diffInMonths($expiry);
-
+            //$creado = $this->document_to_edit->created_at;
+            //$expiry = Carbon::parse($this->document_to_edit->expiration);
+            //$this->expiry=$creado->diffInMonths($expiry);
+            $this->expiry=$this->document_to_edit->expiration;
             $path =public_path("/storage/".$this->document_to_edit->file);
 
         }
@@ -83,14 +83,28 @@ class Applicant extends Component
 
     public function save()
     {
-        $validatedData = $this->validate([
-            'file' => 'required',
-            ]);
+        
     
-        $exDate = Carbon::parse(now());
+        //$exDate = Carbon::parse(now());
+        //$this->expiry=($this->expiry>0)?$this->expiry:120;
+        //$this->expiry = $exDate->addMonths($this->expiry); 
 
-        $this->expiry=($this->expiry>0)?$this->expiry:120;
-        $this->expiry = $exDate->addMonths($this->expiry);    
+        $toValidate=[
+            'file' => 'required',
+        ];
+
+        $atributes=json_decode($this->type->atributes,true);
+        if (isset($atributes[5])) $toValidate['expiry']=['required','date'];
+
+        $validatedData = $this->validate($toValidate);
+          
+        if ($this->expiry){ 
+            $exDate = Carbon::parse($this->expiry);
+            $this->expiry = $exDate->addMonths($atributes[5]);
+        } else {
+            $exDate = Carbon::parse(now());
+            $this->expiry = $exDate->addMonths(120);
+        }
 
         //$validatedData['file'] = $this->file->store('files', 'public');
 

@@ -64,9 +64,11 @@
                                 Save
                             </x-secondary-button>
                         @else
+                            @if (!$document_to_edit)
                             <x-secondary-button wire:click="save" wire:loading.attr="disabled">
                                 Save
                             </x-secondary-button>
+                            @endif
                         @endif
                     </x-slot>
         </x-dialog-modal>  

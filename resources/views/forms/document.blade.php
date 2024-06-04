@@ -2,6 +2,7 @@
   $staText=["awaiting review","Under review", "Approved", "Rejected"];
   $FileAcc=[".pdf","image/*"];
   $atrb=(isset($attr[1]))?$attr[1]:0;
+  $atributes=($this->type)?json_decode($this->type->atributes ,true):[];
 ?>
  
 <div class="w-full inline-block align-middle mb-4">
@@ -19,10 +20,15 @@
   @endif
 </div>
 
-
-  <x-label value="Expiry time (in months)" />
-      <x-input type="number" wire:model='expiry' class="font-medium text-sm"/>
-  <x-input-error for="expiry"  />
+@if (isset($atributes[5]))
+  @if (!$document_to_edit)
+    <x-label value="Issue date" />
+      <x-input type="date" wire:model='expiry' class="font-medium text-sm"/>
+    <x-input-error for="expiry"  />
+  @else
+    <x-label value="Expiration date: {{$this->expiry}}" />
+  @endif  
+@endif
 
 @if ($document_to_edit)
     <div class="w-full p-2 bg-gray-300 mt-2 text-black">
