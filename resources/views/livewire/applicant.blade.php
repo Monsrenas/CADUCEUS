@@ -71,6 +71,6 @@
                             @endif
                         @endif
                     </x-slot>
-        </x-dialog-modal>  
+        </x-dialog-modal>
     </div>
 </div>
