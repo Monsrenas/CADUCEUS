@@ -56,7 +56,7 @@
                         @endif
                     </td>
                     <td class="text-center">
-                        {{ (isset($item->documents))?count($item->documents):0}}                    
+                        {{ (isset($item["applicant"]->documents))?count($item["applicant"]->documents):0}}                    
                     </td>
                     <td>
                         {{$status[$item["applicant"]->process_state]}}

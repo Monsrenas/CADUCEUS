@@ -1,5 +1,6 @@
 @php
-    $staText=["awaiting review","Under review", "Approved", "Rejected"]
+    $staText=["awaiting review","Under review", "Approved", "Rejected"];
+    
 @endphp
 <div class="relative h-fit shadow-md sm:rounded-lg">
   
@@ -27,18 +28,32 @@
             @foreach ($doc_list as $item)
                 <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
                    
-                    <td scope="col" class="px-2 py-3 text-left">
-                        {{$item->doc_type->name}}
+                    <td scope="col" 
+                    @if (isset($item["documents"][0]))
+                        class="px-2 py-3 text-left text-green-800"
+                    @else    
+                        class="px-2 py-3 text-left text-red-400"
+                    @endif    
+                        >
+                        {{$item->name}}
+
                     </td>
                     
                     <td scope="col" class="px-2 py-3 text-left">
-                        {{$staText[$item["state"]]}}
+                       @if (isset($item["documents"][0]->state)) 
+                        {{$staText[$item["documents"][0]->state]}}
+                        @else
+                        <span class="text-red-400">Not loaded</span> 
+                       @endif 
+
                     </td>
                     <td class="px-6 text-center">
-                        <a wire:click="ViewDoc({{ $item->id }})"
-                            class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
-                            View
-                        </a>
+                        @if (isset($item["documents"][0]))
+                            <a wire:click="ViewDoc({{ $item["documents"][0]->id }})"
+                                class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
+                                View
+                            </a>
+                        @endif    
                     </td>
                 </tr>
             @endforeach

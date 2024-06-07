@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\applicant;
+use App\Models\document_type;
 use App\Models\documents;
 use App\Models\comments;
 use Illuminate\Support\Facades\Storage;
@@ -42,8 +43,12 @@ class Review extends Component
     public function Applicant_details($id)
     {
         $this->postToEdit=applicant::find($id);
-        $this->doc_list=$this->postToEdit->documents;
+        //$this->doc_list=$this->postToEdit->documents;
         $this->nameToEdit=$this->postToEdit->user->name;
+        $UserID=$this->postToEdit->user_id;
+        $this->doc_list=document_type::with(['documents'=>  function($q) use($UserID) {
+            $q->where('user_id', '=', $UserID);
+        }])->whereJsonContains('atributes->2', true)->get();
     }
 
     public function ViewDoc($postId){
