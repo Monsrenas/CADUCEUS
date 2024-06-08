@@ -12,6 +12,9 @@
     <table class="w-full text-sm text-left text-gray-500 table-auto">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
+                <th>
+                    Active
+                </th>
                 <th class="px-2 py-3 text-center">
                     User name
                 </th>
@@ -28,7 +31,9 @@
             @foreach ($lista as $item)
                 <?php $mAccess=json_decode ($item["access"],true); ?>
                 <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
-                    
+                    <td>
+                         <input wire:click='activation({{$item->id}})' {{($item->active)?'checked':''}} type="checkbox"/>
+                    </td>
                     <td scope="col" class="px-2 py-3 text-left">
                         {{$item["name"]}}
                     </td>

@@ -44,7 +44,7 @@ class Users extends Component
                             ];
                     $this->postToEdit=User::create($datos);
                  
-                    $this->SendMail();
+                    $this->SendMail(0);
 
                     $this->dispatchBrowserEvent('message', [
                         'body' => 'The user has been created successfully. An email was sent with the information and the access link.',
@@ -96,6 +96,19 @@ class Users extends Component
         $this->showDeleteModal = true;
         $this->postIdToDelete=$postId;
     }
+
+    public function activation($id)
+    {
+         
+        $user=User::find($id);
+        $active=$user->active;
+        $user->update(['active' => !$active]);
+        $active=($active)? 'deactivated.':'activated.';
+        $this->dispatchBrowserEvent('message', [
+            'body' => 'User, '.$user->name.', successfully '.$active,
+            'timeout' => 4000 ]);
+    }
+
     public function ResetPassword($postId)
     {
         $this->edit($postId);
@@ -103,7 +116,7 @@ class Users extends Component
         $this->tmpPassword=Str::random(8);
         $this->postToEdit->password=Hash::make($this->tmpPassword);
         $this->postToEdit->save();
-        $this->SendMail(); 
+        $this->SendMail(1); 
          
         $this->dispatchBrowserEvent('message', [
             'body' => 'Password successfully reseted.',
@@ -129,10 +142,11 @@ class Users extends Component
         $this->reset('xAccess');
     }
 
-    public function SendMail()
+    public function SendMail($tIn)
     {
-        $type=[['emails.new-user-mail','You have been registered as a new user in the CADUCEUS system'],
-               ['emails.new-user-mail']];
+        $type=[['You have been registered as a new user in the CADUCEUS system',' We are pleased to inform you that you have been registered as a user in the CADUCEUS system. 
+        To continue, ','New user Mail'],
+               ['Your password has been reset successfully', 'As a measure to make it possible for you to access the CADUCEUS system, Your password has been reset,','Password reset Mail']];
         Mail::send('emails.new-user-mail',
         array(
             'name' => $this->name,
@@ -140,10 +154,12 @@ class Users extends Component
            // 'attachment' => $this->attachment,
            // 'comment' => $this->comment,
              'Password'=>$this->tmpPassword,
+             'Text'=>$type[$tIn][1],
+             'Title'=>$type[$tIn][2],
             ),
-            function($message){
+            function($message) use ($type, $tIn){ 
                 $message->from('references@tcihospital.tc','InterHealthCanada');
-                $message->to($this->email, $this->name )->subject('You have been registered as a new user in the CADUCEUS system');
+                $message->to($this->email, $this->name )->subject($type[$tIn][0]);
             }
         );
 

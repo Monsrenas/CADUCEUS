@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>New user Mail</title>
+    <title>{{$Title}}</title>
 </head>
 <body>
     <h1>User Mail</h1>
     <p>
-    We are pleased to inform you that you have been registered as a user in the CADUCEUS system. 
-        To continue, access our platform through the link indicated below
+    {{$Text}} access our platform through the link indicated below
     </p>
 
     <a href=" {{ route('login') }}" style="display: block;
