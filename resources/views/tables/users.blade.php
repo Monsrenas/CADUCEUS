@@ -32,7 +32,9 @@
                 <?php $mAccess=json_decode ($item["access"],true); ?>
                 <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
                     <td>
-                         <input wire:click='activation({{$item->id}})' {{($item->active)?'checked':''}} type="checkbox"/>
+                        @if ((auth()->user()->id<>$item->id))
+                            <input wire:click='activation({{$item->id}})' {{($item->active)?'checked':''}} type="checkbox"/>
+                        @endif     
                     </td>
                     <td scope="col" class="px-2 py-3 text-left">
                         {{$item["name"]}}

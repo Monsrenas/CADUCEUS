@@ -9,7 +9,7 @@
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
-
+            @if (auth()->user()->active<>0)
                 <?php $mAccess=json_decode (auth()->user()->access,true);
                       if ($mAccess)  {
                         for ($i=0; $i < 4; $i++) { 
@@ -61,7 +61,7 @@
                     </div>
                 @endif
             </div>
-
+        @endif              
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
