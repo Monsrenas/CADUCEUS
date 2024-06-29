@@ -3,7 +3,7 @@
     <div wire:click="ReferenceDetail" class="card font-medium text-sm" style="background: blue; display: grid; grid-template-columns: 9fr 1fr;" >
     Medical/nursing council/health partners
         <div style=" text-aling:center; font-size:.8em; color:yellow" > 
-            
+            test
         </div>
     </div>
 
