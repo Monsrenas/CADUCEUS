@@ -34,3 +34,4 @@ class CreateNewUser implements CreatesNewUsers
             'access'=>json_encode([true,true,true,true]),
         ]);
     }
+}
