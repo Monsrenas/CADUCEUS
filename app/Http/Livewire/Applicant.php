@@ -23,7 +23,6 @@ class Applicant extends Component
 
     public function render()
     {
-        echo path();
         $this->docList();
         $doc_list=$this->doc_list;
         $prvw=$this->preview;
