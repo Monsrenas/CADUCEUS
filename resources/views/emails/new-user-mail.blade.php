@@ -7,7 +7,7 @@
     <title>{{$Title}}</title>
 </head>
 <body>
-    <h1>User Mail</h1>
+    <h1>{{$Title}}</h1>
     <p>
     {{$Text}} access our platform through the link indicated below
     </p>

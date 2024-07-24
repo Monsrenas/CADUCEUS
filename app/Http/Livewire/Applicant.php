@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Mail;
 use Response;
 
 use App\Models\document_type;
@@ -84,7 +85,6 @@ class Applicant extends Component
     public function save()
     {
         
-    
         //$exDate = Carbon::parse(now());
         //$this->expiry=($this->expiry>0)?$this->expiry:120;
         //$this->expiry = $exDate->addMonths($this->expiry); 
@@ -131,9 +131,18 @@ class Applicant extends Component
 
     public function Save_reference()
     {
+        
+        $vldt=$this->validate(['field.1.*.*'=> 'required',
+                              'field.1.*.2'=> 'required|email']);
+        
+        for ($i=0; $i < 4; $i++) {
+            for ($i=0; $i < 4; $i++) {
+                if ((isset($this->field[1][$i]))and(!$this->field[1][$i][3])) {$this->SendMail($i, $this->field[1][$i]);}   
+            }
+        }
+
         $Applicant= ('App\Models\\applicant')::where('user_id',auth()->user()->id)->first();
-        $data=['applicant_id'=>$Applicant->id,
-        'persons'=>json_encode($this->field)];
+        $data=['applicant_id'=>$Applicant->id,  'persons'=>json_encode($this->field)];
 
         if ($Applicant->reference)
         {
@@ -181,5 +190,51 @@ class Applicant extends Component
         if (Storage::disk('public')->exists($fileToDel)){
             $regre=Storage::disk(name:'public')->delete($fileToDel);
         }
+    }
+
+    public function clearReference($ind)
+    {
+        $this->field[1][$ind][1]="";
+        $this->field[1][$ind][2]="";
+        $this->field[1][$ind][3]=false;
+    }
+
+    public function MailSendYet()
+    {
+        $contSY=0;
+        $SendYet = array_column($this->field[1], '3');
+        foreach ($SendYet as $key => $value) {
+            $contSY=$contSY+($value ? 1 : 0);
+        }
+        
+        return $contSY; //($contSY==4 ? true : false);;
+    }
+
+    public function sendRequest($ind)
+    {
+        $this->field[1][$ind][3]=true;
+        $this->SendMail($ind, $this->field[1][$ind]);
+    }
+
+    public function SendMail($tIn, $info)
+    {
+         if ($tIn>0) {$tIn=1;}
+
+        $type=[['Good Standing letter Request','Good Standing letter Request'],
+               ['Reference letter Request','Reference letter Request']];
+        Mail::send('emails.letter-request-mail',
+        array(
+                'name' => $info[1],
+                'email' => $info[2],
+                'userName'=>auth()->user()->name,
+                'Password'=>'$this->tmpPassword',
+                'reference'=>$tIn,
+                'Title'=>$type[$tIn][1],
+            ),
+            function($message) use ($type, $tIn, $info){ 
+                $message->from('references@tcihospital.tc','InterHealthCanada');
+                $message->to($info[2],$info[1] )->subject($type[$tIn][0]);
+            }
+        );
     }
 }

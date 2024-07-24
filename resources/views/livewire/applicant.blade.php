@@ -26,7 +26,7 @@
 
 <?php
     $documents= array("HPA application for Registration", "HPA application for Licensure/Renewal", "Curriculum vitae", "Police Record","Copy of passport");
-    $colo=array("green","orange", "red", "gray");
+    $colo=array("gray","orange", "green", "red");
     $status=["8986","x2699","9745","x26d4"," x2714"];
 ?>
     <div class="py-12">
@@ -42,7 +42,7 @@
                         <div class="inline-flex">
                             <p class="uppercase  text-xl text-center">
                                 @if ($this->editReference)
-                                List 3 persons to whom a request will be sent for letters of reference.
+                                Institutions and people to whom a reference letter request will be sent.
                                 @else
                                     {{$this->DocName}} 
                                 @endif
@@ -61,7 +61,11 @@
                     <x-slot name='footer'>
                         @if ($this->editReference)    
                             <x-secondary-button wire:click="Save_reference" wire:loading.attr="disabled">
-                                Save
+                                Save 
+                                @if (!$this->MailSendYet())
+                                and Send    
+                                @endif 
+                                
                             </x-secondary-button>
                         @else
                             @if (!$document_to_edit)
