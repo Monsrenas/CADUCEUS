@@ -40,7 +40,7 @@
         <x-dialog-modal wire:model="open">
                     <x-slot name='title'>
                         <div class="inline-flex">
-                            <p class="uppercase  text-xl text-center">
+                            <p class="text-md text-center">
                                 @if ($this->editReference)
                                 Institutions and people to whom a reference letter request will be sent.
                                 @else

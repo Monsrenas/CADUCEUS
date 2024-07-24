@@ -12,7 +12,7 @@
             <th></th>
             <th  class="text-center" >Representative</th>
             <td class="text-center p-1 w-full" >
-                <input type="text" class="w-full"  wire:model='field.1.0.1'  />
+                <input type="text" class="w-full text-sm"  wire:model='field.1.0.1'  />
                 <x-input-error for="field.1.0.1" class="mt-2" />
             </td>
             @if ((@isset($this->field[1][0][3]))and($this->field[1][0][3]))
@@ -24,11 +24,11 @@
             <th></th>
             <th class="mb-2">Email</th>
             <td class="text-center p-1">
-                <input type="email" class="w-full" wire:model='field.1.0.2' />
+                <input type="email" class="w-full text-sm" wire:model='field.1.0.2' />
                 <x-input-error for="field.1.0.2" class="mt-2" />
             </td>
         </tr>
-        <tr>  <td colspan="5"> . </td>  </tr>
+        <tr>  <td colspan="5"> </td>  </tr>
         <tr>  <td colspan="5"> <hr> </td>  </tr>
         <tr>  <td colspan="5"> . </td>  </tr>
         <tr>
@@ -40,7 +40,7 @@
                 <th class="text-center" width="10%">Name</th>
 
                 <td class="text-center p-1 w-full" >
-                    <input type="text" class="w-full"  wire:model='field.1.{{$i}}.1'  />
+                    <input type="text" class="w-full text-sm"  wire:model='field.1.{{$i}}.1'  />
                     <x-input-error for="field.1.{{$i}}.1" class="mt-2" />
                 </td>
                 @if ((@isset($this->field[1][$i][3]))and($this->field[1][$i][3]))
@@ -55,7 +55,7 @@
             <tr>    
                 <th>Email</th>
                 <td class="text-center p-1">
-                    <input type="email" class="w-full" wire:model='field.1.{{$i}}.2' />
+                    <input type="email" class="w-full text-sm" wire:model='field.1.{{$i}}.2' />
                     <x-input-error for="field.1.{{$i}}.2" class="mt-2" />
                 </td>
             </tr>
