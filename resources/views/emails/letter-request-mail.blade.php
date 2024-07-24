@@ -29,7 +29,7 @@
         Please access our platform through the following link to upload, in PDF format, the requested document.
     </p>
 
-    <a href=" {{url("")}}" style="display: block;
+    <a href=" {{route('home')}}" style="display: block;
         width: 115px;
         height: 25px;
         background: #4E9CAF;

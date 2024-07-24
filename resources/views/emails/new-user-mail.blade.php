@@ -12,7 +12,7 @@
     {{$Text}} access our platform through the link indicated below
     </p>
 
-    <a href=" {{ route('login') }}" style="display: block;
+    <a href=" {{ route('home') }}" style="display: block;
     width: 115px;
     height: 25px;
     background: #4E9CAF;
