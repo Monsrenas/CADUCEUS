@@ -23,6 +23,7 @@ class Applicant extends Component
 
     public function render()
     {
+        echo path();
         $this->docList();
         $doc_list=$this->doc_list;
         $prvw=$this->preview;
@@ -202,11 +203,13 @@ class Applicant extends Component
     public function MailSendYet()
     {
         $contSY=0;
-        $SendYet = array_column($this->field[1], '3');
-        foreach ($SendYet as $key => $value) {
-            $contSY=$contSY+($value ? 1 : 0);
+
+        if (isset($this->field[1])){
+            $SendYet = array_column($this->field[1], '3');
+            foreach ($SendYet as $key => $value) {
+                $contSY=$contSY+($value ? 1 : 0);
+            }
         }
-        
         return $contSY; //($contSY==4 ? true : false);;
     }
 
