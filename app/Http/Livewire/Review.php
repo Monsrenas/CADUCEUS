@@ -35,7 +35,7 @@ class Review extends Component
     }
     
     public function new(){
-    
+        
         $this->reset('postToEdit');
         $this->xOpen = true;
     }

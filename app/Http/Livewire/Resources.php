@@ -45,8 +45,15 @@ class Resources extends Component
     }
 
     public function new(){
+        $this->DTypeEmpty();
         $this->reset('postToEdit','field');
         $this->open = true;
+    }
+
+    public function DTypeEmpty()
+    {
+        $firstElement=$this->docType=('App\Models\\document_type')::first();
+        
     }
 
     public function save() {

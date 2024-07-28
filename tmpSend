@@ -1,0 +1,20 @@
+I need the information to send mail through the SMTP protocol:
+
+    1- SMTP Host
+    2- Port
+    3- User Name
+    4- Password 
+    5- MAIL_ENCRYPTION
+
+MAIL_PORT=587
+MAIL_USERNAME=alcadytoo@gmail.com
+MAIL_PASSWORD=baytmmptmfuxharv
+MAIL_ENCRYPTION=ssl
+
+El pensamiento condiciona la accion
+La accion determina  el comportamiento
+El comportamiento repetido crea habitos
+Los Habitos estructuran el caracter (la manera de pensar, ser y actuar)
+El caracter Marca un destino
+
+                                    Aristoteles

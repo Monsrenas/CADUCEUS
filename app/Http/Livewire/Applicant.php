@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Mail;
 use Response;
 
@@ -33,6 +34,15 @@ class Applicant extends Component
         return view('livewire.applicant', compact('doc_list','prvw'));
     }
 
+    public function getTemporalLink($refenceCode)
+    {
+        return URL::temporarySignedRoute(
+            'UploadReference', 
+            now()->addMinutes(5), 
+            ['refenceCode' =>$refenceCode, 'user' => auth()->user()]
+        );
+    }
+
     public function DocDetail($id,$type)
     {
         $this->reset('document_to_edit', 'expiry','file','editReference');
@@ -58,7 +68,6 @@ class Applicant extends Component
 
     public function ReferenceDetail()
     {
-
         $Applicant= ('App\Models\\applicant')::where('user_id',auth()->user()->id)->first();
         if ($Applicant->reference)
         {
@@ -137,7 +146,7 @@ class Applicant extends Component
         
         for ($i=0; $i < 4; $i++) {
             for ($i=0; $i < 4; $i++) {
-                if ((isset($this->field[1][$i]))and(!$this->field[1][$i][3])) {$this->SendMail($i, $this->field[1][$i]);}   
+                if ((isset($this->field[1][$i]))and($this->field[1][$i][3])) {$this->SendMail($i, $this->field[1][$i]);}   
             }
         }
 
@@ -220,7 +229,9 @@ class Applicant extends Component
 
     public function SendMail($tIn, $info)
     {
-         if ($tIn>0) {$tIn=1;}
+        if ($tIn>0) {$tIn=1;}
+        
+        $tmpLink=$this->getTemporalLink($tIn);
 
         $type=[['Good Standing letter Request','Good Standing letter Request'],
                ['Reference letter Request','Reference letter Request']];
@@ -229,7 +240,7 @@ class Applicant extends Component
                 'name' => $info[1],
                 'email' => $info[2],
                 'userName'=>auth()->user()->name,
-                'Password'=>'$this->tmpPassword',
+                'tmpLink'=>$tmpLink,
                 'reference'=>$tIn,
                 'Title'=>$type[$tIn][1],
             ),

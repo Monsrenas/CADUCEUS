@@ -15,7 +15,7 @@
                 <input type="text" class="w-full text-sm"  wire:model='field.1.0.1'  />
                 <x-input-error for="field.1.0.1" class="mt-2" />
             </td>
-            @if ((@isset($this->field[1][0][3]))and($this->field[1][0][3]))
+            @if ((isset($this->field[1][0][3]))and($this->field[1][0][3]))
                 <td rowspan="2"><button wire:click="sendRequest(0)" class="bg-gray-300 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">📨</button></td>    
             @endif
             <td rowspan="2"><button wire:click="clearReference(0)" class="bg-gray-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">🗑</button></td>
@@ -43,7 +43,7 @@
                     <input type="text" class="w-full text-sm"  wire:model='field.1.{{$i}}.1'  />
                     <x-input-error for="field.1.{{$i}}.1" class="mt-2" />
                 </td>
-                @if ((@isset($this->field[1][$i][3]))and($this->field[1][$i][3]))
+                @if ((isset($this->field[1][$i][3]))and($this->field[1][$i][3]))
                     <td rowspan="2">
                         <button wire:click="sendRequest({{$i}})" class="bg-gray-300 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">📨</button>
                     </td>    
@@ -72,3 +72,6 @@
         @endfor
     </tbody>
 </table>
+
+
+{"1": [{"1": "Ania Sarria Representative", "2": "ania@yimeil.com", "3": false}, {"1": "John Secada", "2": "john@gemail.com", "3": true}, {"1": "Pepe Piedra", "2": "piedra@gemail.com", "3": true}, {"1": "Alexis Mera", "2": "mera2025@gemail.com", "3": true}]}

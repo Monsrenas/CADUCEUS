@@ -23,7 +23,6 @@ Route::middleware([
         if (auth()->user()->active==0){
             return view('Intactive');
         } else {
-
                         if (auth()->user()->role==3){
                         return redirect()->route('dashboard');
                     }  else  {
@@ -96,4 +95,13 @@ Route::middleware([
                 return view('dashboard', ['xcomponent' => 'review']);
         }
     })->name('review');
+});
+
+Route::middleware([
+    //'signed', 
+])->group(function () {
+
+    Route::get('/UploadReference', function () {
+        return view('upload-reference');
+    })->name('UploadReference');
 });

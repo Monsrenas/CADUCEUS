@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$Title}}</title>
 </head>
-<body>
+<body style="color: black">
     <h1>{{$Title}}</h1>
-    <p style="text-align: justify; line-height: 1.5em;">
+    <p style="text-align: justify; line-height: 1.5em; ">
        @if ($reference==0) 
             Dear {{$name}}, I {{$userName}} do hereby request a Letter of Good Standing to be issued on my behalf to the following parties:
             <ol>
@@ -28,18 +28,14 @@
     <p>
         Please access our platform through the following link to upload, in PDF format, the requested document.
     </p>
-
-    <a href=" {{route('home')}}" style="display: block;
-        width: 115px;
-        height: 25px;
-        background: #4E9CAF;
-        padding: 4px;
-        text-align: center;
-        margin: 0 auto;
-        border-radius: 5px;
-        color: white;
-        font-size: .66em;">Upload files here
-    </a>
+    <p>
+        <a href=" {{$tmpLink}}" style=" background-color: #199319;
+                                        color: white;
+                                        padding: 10px 10px;
+                                        text-decoration: none;">
+            Upload files here
+        </a>
+    </p>    
     <p>
         Please note that the previous link will be valid for 15 days.
     </p>
