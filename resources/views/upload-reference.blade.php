@@ -31,7 +31,6 @@
                                     <x-application-mark class="block h-9 w-auto" />
                                 </a>
                             </div>
-                            
                         </div>
                         <div class="flex w-screen  place-content-center p-0">
                             <div >
@@ -49,11 +48,8 @@
                 @livewire('upload-reference') 
                    
             </main>
-        </div>
-        
+        </div> 
         @livewireScripts
     </body>
 </html>
-                    
-                 
                

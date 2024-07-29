@@ -30,6 +30,7 @@
     $status=["8986","x2699","9745","x26d4"," x2714"];
 ?>
     <div class="py-12">
+        @include('flashMesaje')
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg" >
                 @include('tables.document')     
@@ -37,7 +38,7 @@
         </div>
     
         <!-- Modal de Crear/editar -->
-        <x-dialog-modal wire:model="open">
+        <x-dialog-modal wire:model="open" >
                     <x-slot name='title'>
                         <div class="inline-flex">
                             <p class="text-md text-center">
@@ -51,25 +52,34 @@
                     </x-slot>
 
                     <x-slot name='content'>
-                        @if ($this->editReference)
+                        @if (($this->editReference)and($this->open))
                             @include('forms.references')  
                         @else
+                            @if ($this->open)
                             @include('forms.document')
+                            @endif 
                         @endif
                     </x-slot>
 
                     <x-slot name='footer'>
-                        @if ($this->editReference)    
-                            <x-secondary-button wire:click="Save_reference" wire:loading.attr="disabled">
-                                Save 
-                                @if (!$this->MailSendYet())
-                                and Send    
-                                @endif 
-                                
-                            </x-secondary-button>
+                        <div  class="float-left mr-20">
+                            <x-danger-button wire:click="CloseEditReference()" wire:loading.attr="disabled">
+                                Cancel  
+                            </x-danger-button>
+                        </div>
+
+                        @if ($this->editReference)   
+                           @if ($this->UpdatedInfo)
+                                <x-secondary-button wire:click="Save_reference" wire:loading.attr="disabled">
+                                    Save 
+                                    @if (!$this->MailSendYet())
+                                    and Send    
+                                    @endif 
+                                </x-secondary-button>
+                            @endif
                         @else
                             @if (!$document_to_edit)
-                            <x-secondary-button wire:click="save" wire:loading.attr="disabled">
+                            <x-secondary-button wire:click="save" wire:loading.attr="disabled"  wire:loading.remove>
                                 Save
                             </x-secondary-button>
                             @endif

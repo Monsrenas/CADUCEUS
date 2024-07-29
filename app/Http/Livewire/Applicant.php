@@ -20,7 +20,7 @@ class Applicant extends Component
     private $preview=null;
     public $open=false, $doc_list=[];
     public $DocName="", $modelFile, $document_to_edit=null, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[],
-           $editReference=false, $field=[], $persons=0;
+           $editReference=false, $field=[], $persons=0, $UpdatedInfo=false;
 
     public function render()
     {
@@ -34,11 +34,16 @@ class Applicant extends Component
         return view('livewire.applicant', compact('doc_list','prvw'));
     }
 
+    public function updatedField()
+    {
+           $this->UpdatedInfo=true; 
+    }
+
     public function getTemporalLink($refenceCode)
     {
         return URL::temporarySignedRoute(
             'UploadReference', 
-            now()->addMinutes(5), 
+            now()->addDays(15), 
             ['refenceCode' =>$refenceCode, 'user' => auth()->user()]
         );
     }
@@ -80,6 +85,8 @@ class Applicant extends Component
         $this->open=true;
     }
 
+    public function CloseEditReference()  {$this->reset();}  
+
     public function docList()
     {
         $userID=auth()->user()->id;
@@ -93,7 +100,6 @@ class Applicant extends Component
 
     public function save()
     {
-        
         //$exDate = Carbon::parse(now());
         //$this->expiry=($this->expiry>0)?$this->expiry:120;
         //$this->expiry = $exDate->addMonths($this->expiry); 
@@ -140,13 +146,13 @@ class Applicant extends Component
 
     public function Save_reference()
     {
-        
         $vldt=$this->validate(['field.1.*.*'=> 'required',
                               'field.1.*.2'=> 'required|email']);
         
         for ($i=0; $i < 4; $i++) {
             for ($i=0; $i < 4; $i++) {
-                if ((isset($this->field[1][$i]))and($this->field[1][$i][3])) {$this->SendMail($i, $this->field[1][$i]);}   
+                if ((isset($this->field[1][$i]))and(!$this->field[1][$i][3])) {$this->SendMail($i, $this->field[1][$i]);}  
+                $this->field[1][$i][3]=true; 
             }
         }
 
@@ -161,6 +167,10 @@ class Applicant extends Component
         } else {
             ('App\Models\\reference')::create($data);
         }
+        $TextMessage=$this->MailSendYet()?'Your updates have been saved successfully!':'Your request for a reference letter has been sent to the registered persons, successfully!';
+        $this->dispatchBrowserEvent('message', [
+            'body' => $TextMessage,
+            'timeout' => 6000 ]);
 
         $this->reset();
     }
@@ -225,13 +235,18 @@ class Applicant extends Component
     {
         $this->field[1][$ind][3]=true;
         $this->SendMail($ind, $this->field[1][$ind]);
+
+        
+        $this->dispatchBrowserEvent('message', [
+            'body' => 'Your request for a reference letter has been successfully forwarded to '.$this->field[1][$ind][1].' !',
+            'timeout' => 6000 ]);
+            $this->reset();
     }
 
     public function SendMail($tIn, $info)
-    {
-        if ($tIn>0) {$tIn=1;}
-        
+    {        
         $tmpLink=$this->getTemporalLink($tIn);
+        if ($tIn>0) {$tIn=1;}
 
         $type=[['Good Standing letter Request','Good Standing letter Request'],
                ['Reference letter Request','Reference letter Request']];

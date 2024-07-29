@@ -19,15 +19,17 @@ class Review extends Component
     public $postToEdit="", $xOpen=false;
     public $typeJob="",$name, $email="", $tmpPassword="";
     public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
-           $docToView=[], $field="", $rvwStart=false, $xComment="",$xGroup="";
+           $docToView=[], $field="", $rvwStart=false, $xComment="",$xGroup="", $xName="";
 
     public function render()
     {
         $xGroup=$this->xGroup;   
-         
+        $xName=$this->xName;
         $lista=User::whereHas('applicant')->when($this->xGroup<>'', function ($query) use ($xGroup) {
             $query->whereJsonContains('access->9', $xGroup);
-        })->paginate(6);
+        })->when(($this->xName<>""), function($q) use ($xName){
+            return $q->where('name', 'like','%'.$xName.'%');
+          })->paginate(6);
 
      
         $list_doc=$this->doc_list;

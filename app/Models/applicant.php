@@ -15,12 +15,12 @@ class applicant extends Model
 
     public function user() 
     {
-        return $this->hasOne(user::class,'id','user_id');
+        return $this->hasOne(User::class,'id','user_id');
     }
 
     public function reference() 
     {
-        return $this->hasOne(reference::class,'applicant_id');
+        return $this->hasOne(reference::class,'applicant_id','id');
     }
 
     public function documents() 

@@ -6,13 +6,7 @@
 @endphp
 
 <div class="relative h-fit shadow-md sm:rounded-lg">
-    <select   wire:model='xGroup' 
-        class="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-max py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500">
-        <option value=""  selected >All groups</option>
-        @foreach ($Lvl as $ind=>$itm)
-            <option value="{{$ind}}">{{$itm}}</option>
-        @endforeach
-    </select>
+    @include('xFilter')
 
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">

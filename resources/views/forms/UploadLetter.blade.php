@@ -6,31 +6,15 @@
 ?>
  
 <div class="w-full inline-block align-middle mb-4">
-  
-  @if (!$document_to_edit)
+ 
+  @if (!isset($this->field[1][$letterIndex][4]))
     <x-label value="File" />
       <x-input type="file"  wire:model='file' accept="{{$FileAcc[$atrb]}}"  />
     <x-input-error for="file" class="mt-2" />
   @endif
-
-  @if (($modelFile)and(!$document_to_edit))
-    <x-secondary-button wire:click="donwload" wire:loading.attr="disabled" class="float-right align-middle bg-green-700 hover:bg-green-600" >
-    &#x1F4C1; Form   ⬇
-    </x-secondary-button>
-  @endif
 </div>
 
-@if (isset($atributes[5]))
-  @if (!$document_to_edit)
-    <x-label value="Issue date" />
-    <x-input type="date" wire:model='expiry' class="font-medium text-sm"/>
-    <x-input-error for="expiry"  />
-  @else
-    <x-label value="Expiration date: {{$this->expiry}}" />
-  @endif  
-@endif
-
-@if ($document_to_edit)
+@if (isset($this->field[1][$letterIndex][4]))
     <div class="w-full p-2 bg-gray-300 mt-2 text-black">
         
           <span class="font-semibold">Status:</span>  {{$staText[$document_to_edit->state]}}
@@ -38,21 +22,15 @@
     </div>
   <table class="w-full">
     <td>&#x1F4C1;</td>
-    
-    <td width="70%" class="text-left">My 
-      @if (isset($this->letterType))
-        {{$this->letterType}}
-      @else
-         {{$document_to_edit->doc_type->name}}
-      @endif
-    </td>
-
+    <td width="70%">My {{ $this->letterType}}</td>
     <td class="text-center">
       @if (($document_to_edit->state==0))
-        <a wire:click="DeleteDoc({{ $document_to_edit->id }})" 
+      
+        <a wire:click="DeleteDoc({{$this->letterIndex}})" 
           class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
             Delete 
         </a>
+        
       @endif
     </td>
   </table>

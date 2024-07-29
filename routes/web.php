@@ -98,7 +98,7 @@ Route::middleware([
 });
 
 Route::middleware([
-    //'signed', 
+    'signed', 
 ])->group(function () {
 
     Route::get('/UploadReference', function () {
