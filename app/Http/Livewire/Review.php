@@ -30,8 +30,7 @@ class Review extends Component
         })->when(($this->xName<>""), function($q) use ($xName){
             return $q->where('name', 'like','%'.$xName.'%');
           })->paginate(6);
-
-     
+          
         $list_doc=$this->doc_list;
         return view('livewire.review', compact('lista','list_doc'));
     }

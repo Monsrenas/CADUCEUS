@@ -1,10 +1,7 @@
 
 <?php 
     $access=["Requests", "Resources", "Review", "Users"];
-    $Lvl=[[],["Chief of Medical Services","Chief of Clinical Service",
-          "Chief of Allies Services"],
-          ["Medical Services","Clinical Service",
-          "Allies Services","Human Resources"]];
+
     $defaul=[[true,true,true,true],[true,true,false,false],[false,false,true,false]];
     if ($typeJob) $xAccess=$defaul[$typeJob];
 ?>
@@ -24,7 +21,7 @@
     <select   wire:model='xAccess.9' 
         class="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-max py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500">
         <option value=""  selected hidden>Select group</option>
-        @foreach ($Lvl[$typeJob] as $ind=>$itm)
+        @foreach ($Lvl3d[$typeJob] as $ind=>$itm)
             <option value="{{$ind}}">{{$itm}}</option>
         @endforeach
     </select>

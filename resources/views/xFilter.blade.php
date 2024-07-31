@@ -14,10 +14,8 @@
                         <div class="relative w-full">
                             <div type="submit" class="absolute top-0 start-0  p-2.5 text-sm font-medium h-full text-white bg-gray-50 border-e-0 rounded-lg rounded-e-none border border-gray-300 focus:outline-none  dark:bg-blue-600 dark:hover:bg-blue-700 ">
                                 &#128270; 
-                               
                             </div>
-                            <input placeholder="Name"  wire:model='xName' class="mx-8  p-2.5 w-ajust z-20 text-sm text-gray-900 bg-gray-50 rounded-lg  border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"> 
-                  
+                            <input placeholder="Name"  wire:model='xName' class="mx-8  p-2.5 w-ajust z-20 text-sm text-gray-900 bg-gray-50 border-s-0 rounded-lg  border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"> 
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,12 @@ class Users extends Component
 
     public $postToEdit="", $xOpen=false, $xAccess=[]; 
     public $typeJob="",$name, $email="", $tmpPassword="";
-    public $postIdToDelete="", $nameToDelete="", $showDeleteModal=false;
+    public $postIdToDelete="", $nameToDelete="", $showDeleteModal=false,
+           $xGroup="", $xName="";
+    public  $Lvl3d=[[],["Chief of Medical Services","Chief of Clinical Service",
+    "Chief of Allied Services"],
+    ["Medical Services","Clinical Service",
+    "Allied Services","Human Resources"]];
 
     public function render()
     {

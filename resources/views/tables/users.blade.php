@@ -1,14 +1,11 @@
 @php
     $status=["Started","Under review","Approved","Rejected"];
     $TOJ=["Administrator","Leader SMT","Committe member"];
-    $Lvl=[[],["Chief of Medical Services","Chief of Clinical Service",
-          "Chief of Allies Services"],
-          ["Medical Services","Clinical Service",
-          "Allies Services","Human Resources"]];
-
+    
+    $Lvl=["Medical Services","Clinical Service","Allied Services"];
 @endphp
 <div class="relative h-fit shadow-md sm:rounded-lg">
-    
+    @include('xFilter')
     <table class="w-full text-sm text-left text-gray-500 table-auto">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -41,9 +38,8 @@
                     </td>
                     <td class="text-left">
                       <span class="text-green-600">{{$TOJ[$item["role"]]}}</span>
-                      @if (isset($mAccess[9]))
-                       
-                      <span class="text-xs">{{$Lvl[$item->role][$mAccess[9]]}}</span>   
+                      @if (isset($mAccess[9])) 
+                            <span class="text-xs">{{$Lvl3d[$item->role][$mAccess[9]]}}</span>   
                       @endif
                     </td>
                     <td class="text-left">

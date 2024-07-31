@@ -1,7 +1,7 @@
 @php
     $status=["Started","Under review","Approved","Rejected"];
     $TOJ=["Full time","Locum","Visiting"];
-    $Lvl=["Medical Services","Clinical Service","Allies Services"];
+    $Lvl=["Medical Services","Clinical Service","Allied Services"];
     
 @endphp
 
