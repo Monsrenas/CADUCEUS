@@ -25,7 +25,7 @@ class Resources extends Component
     public function render()
     {
         $lista=[];
-        
+        $this->docType=('App\Models\\document_type')::all();
         if ($this->modelo) {
             
             $lista=($this->modelo)::paginate(6);
