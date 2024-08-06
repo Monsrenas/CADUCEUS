@@ -38,7 +38,7 @@ class UploadReference extends Component
 
     public function SaveRefLetter() {
         $toValidate=[
-            'file' => 'required',
+            'file' => 'required|max:4990',
         ];
 
        //$atributes=json_decode($this->type->atributes,true);

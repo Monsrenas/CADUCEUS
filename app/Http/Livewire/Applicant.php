@@ -60,7 +60,8 @@ class Applicant extends Component
             //$expiry = Carbon::parse($this->document_to_edit->expiration);
             //$this->expiry=$creado->diffInMonths($expiry);
             $this->expiry=$this->document_to_edit->expiration;
-            $path =public_path("/storage/".$this->document_to_edit->file);
+            if (Storage::disk('public')->exists($this->document_to_edit->file)){
+            $path =public_path("/storage/".$this->document_to_edit->file);} else { $this->document_to_edit->delete();}
 
         }
 
@@ -105,7 +106,8 @@ class Applicant extends Component
         //$this->expiry = $exDate->addMonths($this->expiry); 
 
         $toValidate=[
-            'file' => 'required',
+            'file' => 'required|max:4990',
+
         ];
 
         $atributes=json_decode($this->type->atributes,true);
@@ -151,7 +153,7 @@ class Applicant extends Component
         
         for ($i=0; $i < 4; $i++) {
             for ($i=0; $i < 4; $i++) {
-                if ((isset($this->field[1][$i]))and(!$this->field[1][$i][3])) {$this->SendMail($i, $this->field[1][$i]);}  
+                if ((isset($this->field[1][$i]))and(!isset($this->field[1][$i][3]))) {$this->SendMail($i, $this->field[1][$i]);}  
                 $this->field[1][$i][3]=true; 
             }
         }
@@ -176,8 +178,7 @@ class Applicant extends Component
     }
 
     public function readed($id)
-    {
-         
+    {    
         $cmm=('App\Models\\comments')::find($id);
         $cmm->fill(['read'=>true]);
         $cmm->save();

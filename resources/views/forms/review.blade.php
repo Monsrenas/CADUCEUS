@@ -18,10 +18,10 @@
         </div>
     </x-slot>
     <x-slot name='content'>
-        @if (isset($docToView->file))
-            <iframe src="{{$docToView->file}}" style="border: none; " class="w-full min-h-80" wire:ignore>
-            </iframe>
-        @endif
+        @isset($this->docToView->file)
+            <iframe src="{{$this->docToView->file}}" style="border: none; " id="miIframe" class="w-full min-h-80" wire:ignore>
+            </iframe> 
+        @endisset
     </x-slot>
     <x-slot name='footer'>
     <div class="grab  w-full" >    
@@ -48,3 +48,21 @@
         </div>   
     </x-slot>
 </x-dialog-modal>  
+
+<script>
+      document.addEventListener('livewire:load', function () {
+        Livewire.hook('message.processed', (message, component) => {
+           
+            tmp=component.get('DocFile');
+            console.log("---"+tmp+"---");
+
+            const iframe = document.getElementById('miIframe');
+            const nuevoSrc = tmp;
+            if (iframe){
+                if (iframe.src !== nuevoSrc) {
+                    iframe.src = nuevoSrc;
+                }
+            }
+        });
+    });
+</script>

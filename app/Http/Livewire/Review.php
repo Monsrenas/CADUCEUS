@@ -8,6 +8,7 @@ use App\Models\applicant;
 use App\Models\document_type;
 use App\Models\documents;
 use App\Models\comments;
+use App\Models\reference;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -19,7 +20,8 @@ class Review extends Component
     public $postToEdit="", $xOpen=false;
     public $typeJob="",$name, $email="", $tmpPassword="";
     public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
-           $docToView=[], $field="", $rvwStart=false, $xComment="",$xGroup="", $xName="";
+           $docToView=[], $field="", $rvwStart=false, $xComment="",$xGroup="", $xName="", $DocFile=""
+           ,$reference_letter=[], $LetterType=['Good Standing letter','Reference letter'], $letterToView="", $reference_info=null,$yOpen=false;
 
     public function render()
     {
@@ -50,15 +52,38 @@ class Review extends Component
         $this->doc_list=document_type::with(['documents'=>  function($q) use($UserID) {
             $q->where('user_id', '=', $UserID);
         }])->whereJsonContains('atributes->2', true)->get();
+
+        $this->reference_info= ('App\Models\\applicant')::with('reference')->where('user_id',$UserID)->first(); 
+        if ($this->reference_info->reference)  {
+            $this->reference_letter=json_decode($this->reference_info->reference->persons,true);
+            $this->reference_letter= $this->reference_letter[1];
+        }
     }
 
-    public function ViewDoc($postId){
-        $this->docToView = documents::find($postId);
-        $this->rvwStart=($this->docToView->state>0);
-        $this->docToView->file=asset('storage/'.$this->docToView->file);
-         
-        $this->xOpen = true; 
+    public function ViewDoc($post){
+        
+        $this->docToView = documents::find($post);
+       
+        if ($this->docToView) {
+            $this->rvwStart=($this->docToView->state>0);
+            $this->docToView->file=asset('storage/'.$this->docToView->file);
+            $this->DocFile=$this->docToView->file;
+            $this->xOpen = true; 
+        }
+    }
 
+    public function ViewLetter($ind){
+        $this->letterToView=$this->reference_letter[$ind][4];
+         
+        if (Storage::disk('public')->exists($this->letterToView)){
+            $this->letterToView=asset('storage/'.$this->letterToView);
+            $this->DocFile=$this->letterToView;
+            $this->yOpen = true;
+        } else  {   
+                    unset($this->reference_letter[$ind][4]);
+                    $this->reference_info->reference->persons=json_encode(["1"=>$this->reference_letter]);
+                    $this->reference_info->reference->save();
+                }
     }
 
     public function sendComment()

@@ -3,18 +3,35 @@
             {{ __('Review Dashboard') }}
         </h2>
     </x-slot>
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> 
+<div >
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+       
         <div class="w-full  flow-root">
-           @if ($postToEdit)
-                @include('tables.applicant_document')
-           @else
-            @if ($lista)
-                @include('tables.review' )
-            @endif
-           @endif 
-        </div>     
-      
+            @if ($postToEdit)
+                <div style=" display: grid; grid-template-columns: 2fr 1fr;  grid-column-gap: 10px;
+                                                                   grid-row-gap: 1em; padding: 14px;"> 
+                    @include('tables.applicant_document')
+                    <div>
+                        @include('forms.reference_letter')
+                         @include('tables.reference_letters')
+                    </div>
+                </div>
+                <div style="position: fixed; bottom: 5%; left: 44%; "    >
+                    <x-secondary-button   wire:click="closeDetail" wire:loading.attr="disabled" 
+                    style="-webkit-box-shadow: 2px 10px 17px 0px rgba(0,0,0,0.75);
+                           -moz-box-shadow: 2px 10px 17px 0px rgba(0,0,0,0.75); box-shadow: 2px 10px 17px 0px rgba(0,0,0,0.75);">
+                        Return to applicant list
+                    </x-secondary-button>
+                </div>
+            @else
+              <div class="py-12"> 
+                    @if ($lista)
+                        @include('tables.review' )
+                    @endif
+                </div>
+            @endif 
+        </div>   
+               
     </div>
     @include('forms.review')
 <!-- Modal de confirmacion de borrado -->

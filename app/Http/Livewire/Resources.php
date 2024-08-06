@@ -100,7 +100,7 @@ class Resources extends Component
     {
 
         $validatedData = $this->validate([
-        'file' => 'required',
+        'file' => 'required |max:4990',
         'code_id' => 'required',
         
 
