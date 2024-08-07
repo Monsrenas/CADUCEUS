@@ -13,7 +13,6 @@
 
     <x-slot name='content'>
         @if (isset($this->letterToView))
-            {{$this->letterToView}}
             <iframe src='{{$this->letterToView}}' id="miIframe" style="border: none;" class="w-full min-h-80"   wire:ignore >    
             </iframe>
         @endif
