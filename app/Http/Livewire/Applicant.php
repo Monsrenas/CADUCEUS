@@ -150,13 +150,13 @@ class Applicant extends Component
     {
         $vldt=$this->validate(['field.1.*.*'=> 'required',
                               'field.1.*.2'=> 'required|email']);
-        
-        for ($i=0; $i < 4; $i++) {
-            for ($i=0; $i < 4; $i++) {
-                if ((isset($this->field[1][$i]))and(!isset($this->field[1][$i][3]))) {$this->SendMail($i, $this->field[1][$i]);}  
-                $this->field[1][$i][3]=true; 
-            }
-        }
+        //dd($this->field);
+        //for ($i=0; $i < 4; $i++) {
+            
+          //      if ((isset($this->field[1][$i]))and(!isset($this->field[1][$i][3]))) {$this->SendMail($i, $this->field[1][$i]);}  
+          //      $this->field[1][$i][3]=true; 
+            
+       // }
 
         $Applicant= ('App\Models\\applicant')::where('user_id',auth()->user()->id)->first();
         $data=['applicant_id'=>$Applicant->id,  'persons'=>json_encode($this->field)];
@@ -214,9 +214,30 @@ class Applicant extends Component
 
     public function clearReference($ind)
     {
+        unset($this->field[1][$ind]);
+        $this->UpdatedInfo=true;   //Activating the save button
+
+        //Re-index the list of referrers
+        if ($ind<>0){
+                for ($i=1; $i <4 ; $i++) { 
+                    if (!isset($this->field[1][$i])) {
+                        if (isset($this->field[1][$i+1])) {
+                            $this->field[1][$i]=$this->field[1][$i+1];
+                            unset($this->field[1][$i+1]);
+                        }
+                    }
+                }
+        }
+    }
+
+    public function AddInput($pst)
+    {
+        $ind=(($pst<>0)and(isset($this->field[1])))?count($this->field[1]):0;
+       
         $this->field[1][$ind][1]="";
         $this->field[1][$ind][2]="";
         $this->field[1][$ind][3]=false;
+        // dd($ind);
     }
 
     public function MailSendYet()

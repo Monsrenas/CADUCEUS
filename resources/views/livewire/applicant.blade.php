@@ -72,9 +72,6 @@
                            @if ($this->UpdatedInfo)
                                 <x-secondary-button wire:click="Save_reference" wire:loading.attr="disabled">
                                     Save 
-                                    @if (!$this->MailSendYet())
-                                    and Send    
-                                    @endif 
                                 </x-secondary-button>
                             @endif
                         @else
