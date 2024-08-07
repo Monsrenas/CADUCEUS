@@ -1,6 +1,6 @@
 <?php
 $grp=["Medical Services","Clinical Service",
-"Allies Services"];
+"Allied Services"];
 ?>
 
 <x-label value="Type of job" />
