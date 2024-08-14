@@ -45,7 +45,7 @@ class Review extends Component
 
     public function Applicant_details($id)
     {
-        $this->reset();
+        $this->reset('reference_letter');
         $this->postToEdit=applicant::with('reference')->find($id);
         //$this->doc_list=$this->postToEdit->documents;
         $this->nameToEdit=$this->postToEdit->user->name;
