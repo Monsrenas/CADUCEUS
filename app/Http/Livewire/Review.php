@@ -45,6 +45,7 @@ class Review extends Component
 
     public function Applicant_details($id)
     {
+        $this->reset();
         $this->postToEdit=applicant::with('reference')->find($id);
         //$this->doc_list=$this->postToEdit->documents;
         $this->nameToEdit=$this->postToEdit->user->name;
@@ -63,7 +64,6 @@ class Review extends Component
     }
 
     public function ViewDoc($post){
-          
         $this->docToView = documents::find($post);
        
         if ($this->docToView) {
