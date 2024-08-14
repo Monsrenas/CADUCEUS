@@ -20,15 +20,17 @@ class Applicant extends Component
     private $preview=null;
     public $open=false, $doc_list=[];
     public $DocName="", $modelFile, $document_to_edit=null, $file="", $type="", $expiry=0, $FileFormat=1, $attr=[],
-           $editReference=false, $field=[], $persons=0, $UpdatedInfo=false;
+           $editReference=false, $field=[], $persons=0, $UpdatedInfo=false, $saved=true,
+           $grupTitle=['The Council of Medicine and Dentistry','The Council of Nursing and Midwifery','The Council of Allied Health'];
 
     public function render()
     {
         $this->docList();
         $doc_list=$this->doc_list;
         $prvw=$this->preview;
-        if (auth()->user()->applicant->reference){
-            $this->persons=count(json_decode(auth()->user()->applicant->reference->persons, true));
+        if (auth()->user()->applicant->reference){ // cantidad de personas de referencia registradas
+            $references=json_decode(auth()->user()->applicant->reference->persons, true);
+            $this->persons=(isset($references[1]))?count($references[1]):0;
         }
         
         return view('livewire.applicant', compact('doc_list','prvw'));
@@ -37,6 +39,7 @@ class Applicant extends Component
     public function updatedField()
     {
            $this->UpdatedInfo=true; 
+           $this->saved=false;
     }
 
     public function getTemporalLink($refenceCode)
@@ -143,7 +146,9 @@ class Applicant extends Component
         else {documents::create($data);}
     
         session()->flash('message', 'File successfully Uploaded.');
+        
         $this->reset();
+        $this->saved=true;
     }
 
     public function Save_reference()
@@ -216,7 +221,7 @@ class Applicant extends Component
     {
         unset($this->field[1][$ind]);
         $this->UpdatedInfo=true;   //Activating the save button
-
+        //dd($this->field);
         //Re-index the list of referrers
         if ($ind<>0){
                 for ($i=1; $i <4 ; $i++) { 
@@ -232,12 +237,16 @@ class Applicant extends Component
 
     public function AddInput($pst)
     {
-        $ind=(($pst<>0)and(isset($this->field[1])))?count($this->field[1]):0;
-       
+        $ind=$pst;
+        if ($pst<>0){
+            $ind=(isset($this->field[1]))?count($this->field[1])+1:$pst;
+       } 
+
+     
         $this->field[1][$ind][1]="";
         $this->field[1][$ind][2]="";
         $this->field[1][$ind][3]=false;
-        // dd($ind);
+        $this->saved=false; 
     }
 
     public function MailSendYet()
@@ -267,11 +276,14 @@ class Applicant extends Component
 
     public function SendMail($tIn, $info)
     {        
+        $grupInx=json_decode( auth()->user()->access,true);
+
         $tmpLink=$this->getTemporalLink($tIn);
         if ($tIn>0) {$tIn=1;}
 
         $type=[['Good Standing letter Request','Good Standing letter Request'],
                ['Reference letter Request','Reference letter Request']];
+              
         Mail::send('emails.letter-request-mail',
         array(
                 'name' => $info[1],
@@ -280,6 +292,7 @@ class Applicant extends Component
                 'tmpLink'=>$tmpLink,
                 'reference'=>$tIn,
                 'Title'=>$type[$tIn][1],
+                'Group'=>$this->grupTitle[$grupInx[9]],
             ),
             function($message) use ($type, $tIn, $info){ 
                 $message->from('references@tcihospital.tc','InterHealthCanada');

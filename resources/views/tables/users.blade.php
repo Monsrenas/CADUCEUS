@@ -54,10 +54,13 @@
                             Edit
                         </a>
 
+                         {{--
                         <a wire:click="ResetPassword({{ $item->id }})" 
                             class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 cursor-pointer">
                             Reset Password 
                         </a>
+                        --}}
+
                         @endif
 
                         @if ((auth()->user()->id<>$item->id) and (!isset($item->applicant)))

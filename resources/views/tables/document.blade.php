@@ -1,21 +1,42 @@
 <div style=" display: grid; grid-template-columns: 1fr 1fr 1fr;  grid-column-gap: 10px;
                  grid-row-gap: 1em; padding: 14px;">
+                                @php
+                                
+                                    $Ic=($persons==4)?2:(($persons==0)?0:1);
+                             
+                        
 
-    <div wire:click="ReferenceDetail" class="card font-medium text-sm" style="background: blue; display: grid; grid-template-columns: 9fr 1fr;" >
+                            @endphp
+    <div wire:click="ReferenceDetail" class="card font-medium text-sm" style="background:{{$colo[$Ic]}}; display: grid; grid-template-columns: 9fr 1fr;" >
         List of people for reference letters
+
         <div style=" text-aling:center; font-size:.8em; color:yellow" > 
             {{ $persons}} of 4
         </div>
     </div>        
     
     @foreach ($doc_list as $doc=>$ind )
+
         @php
-            $Ic=3;
-            if (isset($ind->documents)and(count($ind->documents)>0)) {$Ic=0;}
+            $Ic=0;
         @endphp
-            
+
         @if (isset($ind->documents)and(count($ind->documents)>0))
             @foreach ($ind->documents as $xdoc )
+
+                                @php
+                                    //Código de colores
+                                    //  No subido ROJO   []
+                                    //  en revisión GRIS  [0 cargado,1 en proceso de revisi'on, 3 rechasado]
+                                    //  aprobado   VERDE [2 aprobado]
+                                    
+                                    if ($xdoc->state<>""){
+                                        $Ic=(in_array($xdoc->state, [0,1,3]))?1:(($xdoc->state=="2")?2:0);
+                                    } 
+                            
+
+                                @endphp
+
                 <div wire:click="DocDetail('{{$xdoc->id}}','{{$ind->id}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr 1fr;" >
                     {{$ind->name}}
                     <?php 
@@ -31,17 +52,17 @@
                         @endif
                     </div>
                     
-                    <div style=" text-aling:center; font-size:1.6em;" > 
-                        &#{{$status[$xdoc->state]}}; 
+                    <div style=" text-aling:center; font-size:1.2em;" > 
+                        &#{{$status[$xdoc->state]}};  
                     </div>
                 </div>    
                    
             @endforeach 
-            @else
+        @else
                 <div wire:click="DocDetail('','{{$ind->id}}')" class="card font-medium text-sm" style="background: {{$colo[$Ic]}}; display: grid; grid-template-columns: 12fr 1fr;" >
                     {{$ind->name}}
                     
                 </div>    
-            @endif    
+        @endif    
     @endforeach
 </div>      

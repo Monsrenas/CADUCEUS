@@ -33,9 +33,9 @@
         @endif
 ">
 
-    <div class="w-full flex flex-col items-center space-y-4 mt-10">
+    <div class="w-full flex flex-col items-center space-y-4 mt-10 ">
 
-        <div class="max-w-sm w-full bg-green-700 rounded-lg pointer-events-auto">
+        <div class="max-w-sm w-full bg-green-700 rounded-lg pointer-events-auto shadow-2xl">
 
             <div class="p-4 flex items-center">
 

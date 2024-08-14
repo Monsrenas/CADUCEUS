@@ -48,7 +48,7 @@
     </td>
 
     <td class="text-center">
-      @if (($document_to_edit->state==0))
+      @if ((in_array($document_to_edit->state, [0,3])))
         <a wire:click="DeleteDoc({{ $document_to_edit->id }})" 
           class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5  text-center mr-2 ">
             Delete 

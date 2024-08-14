@@ -61,7 +61,7 @@ class Review extends Component
     }
 
     public function ViewDoc($post){
-        
+          
         $this->docToView = documents::find($post);
        
         if ($this->docToView) {
@@ -98,10 +98,17 @@ class Review extends Component
 
     public function updatedRvwStart($i)
     {
-        $this->docToView->state=1;
+        $this->docToView->state=($this->docToView->state==1)?0:1;
+        $this->docToView->save();
+    }
+
+    public function updatedField()
+    {
+        $this->docToView->state=$this->field;
         $this->docToView->save();
 
     }
+
 
     public function closeDetail()
     {

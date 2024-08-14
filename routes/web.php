@@ -35,9 +35,9 @@ Route::middleware([
         if (auth()->user()->active==0){
             return view('Intactive');
         } else {
-        if (auth()->user()->role<>3){   return redirect()->route('requests');    } 
+            if (auth()->user()->role<>3){   return redirect()->route('requests');    } 
 
-        return view('dashboard', ['xcomponent' => "applicant"]);
+            return view('dashboard', ['xcomponent' => "applicant"]);
         }
     })->name('dashboard');
 

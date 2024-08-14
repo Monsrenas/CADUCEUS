@@ -26,8 +26,8 @@
 
 <?php
     $documents= array("HPA application for Registration", "HPA application for Licensure/Renewal", "Curriculum vitae", "Police Record","Copy of passport");
-    $colo=array("gray","orange", "green", "red");
-    $status=["8986","x2699","9745","x26d4"," x2714"];
+    $colo=array( "red", "#63605f", "green");
+    $status=["9203","128270","9989","x26d4"," x2714"];
 ?>
     <div class="py-12">
         @include('flashMesaje')

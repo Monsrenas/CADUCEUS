@@ -5,7 +5,7 @@
             <x-authentication-card-logo />
                 
         </x-slot>
-        <div class="text-center font-header text-4xl font-semibold text-blue-600 leading-none">CADUCEUS</div>
+        <div class="text-center font-header text-2xl font-semibold text-blue-700 leading-none">CADUCEUS</div>
             <div class="mb-6 text-sm font-light text-true-gray-500  text-center">System for Credential and Document Upload Checklist for Eligible Users</div>
         <x-validation-errors class="mb-4" />
 

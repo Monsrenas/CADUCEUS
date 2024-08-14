@@ -7,19 +7,29 @@ use App\Models\User;
 use App\Models\applicant;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Traits\Tools;
 use Mail;
 
 class Requests extends Component
 {
+    use Tools;
 
     public $postToEdit="", $xOpen=false, $xAccess=[];
     public $typeJob="",$name, $email="", $tmpPassword="";
-    public $postIdToDelete="", $nameToDelete="", $showDeleteModal=false;
+    public $postIdToDelete="", $nameToDelete="", $showDeleteModal=false,
+           $xGroup="", $xName="";
 
     public function render()
     {
-        $lista=applicant::paginate(6);
-        
+        $xGroup=$this->xGroup;   
+        $xName=$this->xName;
+
+        $lista=applicant::with('user')->whereHas('user', function($query) use ($xGroup, $xName) { $query->when($this->xGroup<>'', function ($query) use ($xGroup) {
+            $query->whereJsonContains('access->9', $xGroup);
+        })->when(($this->xName<>""), function($q) use ($xName){
+            return $q->where('name', 'like','%'.$xName.'%');
+          }); })->paginate(6);
+        //dd($lista);
         return view('livewire.requests', compact('lista'));
     }
     
@@ -51,7 +61,7 @@ class Requests extends Component
                                                     'process_state'=>"0"
                                                 ]);
                  
-                 $this->SendMail();
+                 $this->SendStartMail();
                  $this->dispatchBrowserEvent('message', [
                     'body' => 'Applicant information has been registered. An email was sent to the applicant with the information to access the platform.',
                     'timeout' => 6000 ]);
@@ -87,7 +97,7 @@ class Requests extends Component
         
     }
 
-    public function edit($postId){
+    public function editApplincant($postId){
         $this->postToEdit = applicant::find($postId);
 
         if ($this->postToEdit) {
@@ -124,7 +134,7 @@ class Requests extends Component
         $this->showDeleteModal = false;
     }
 
-    public function SendMail()
+    public function SendStartMail()
     {
   
         Mail::send('emails.applicant-mail',

@@ -13,29 +13,37 @@
             Dear {{$name}}, I {{$userName}} do hereby request a Letter of Good Standing to be issued on my behalf to the following parties:
             <ol>
                 <li>
-                    The Council of Medicine and Dentistry/ Nursing and Midwifery/ Allied Health, The Health Professions Authority, The Ministry of Health, Turks and Caicos Islands 
-                    Email address of Council 
+                    {{$Group}},    
                 </li>
                 <li>
-                    The Human Resources Department. Turks and Caicos Islands Hospital
-                </li>  
+                    The Health Professions Authority,
+                </li>
+                <li>
+                    The Ministry of Health, Turks and Caicos Islands: 
+                    <span class="italic font-semibold"> 23 Parade, Ave Providenciales, Turks and Caicos Islands </span>
+                </li> 
             </ol>
+            <p>
+                The document must be sent to the following email address: Hpareferences@gov.tc
+            </p>
         @else
             Dear {{$name}}, you have been selected by {{$userName}} to submit a letter of professional reference on their behalf. Kindly upload a signed copy this document printed on your corporate letter head to this portal. Please remember to include your professional designation beneath the signature line.      
         @endif
     </p>
 
-    <p>
-        Please access our platform through the following link to upload, in PDF format, the requested document.
+  
+    <p>    
+       Please add it to our platform through the following link to upload, in PDF format, the requested document.
     </p>
-    <p>
+
+    <div class="w-full flex text-center justify-center ">
         <a href=" {{$tmpLink}}" style=" background-color: #199319;
                                         color: white;
                                         padding: 10px 10px;
                                         text-decoration: none;">
             Upload files here
         </a>
-    </p>    
+    </div>    
     <p>
         Please note that the previous link will be valid for 15 days.
     </p>

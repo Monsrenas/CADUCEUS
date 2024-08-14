@@ -24,8 +24,9 @@
             
             @foreach ($doc_list as $item)
 
-                <tr class="text-center border-b hover:bg-sky-200 hover:text-black"    
+                <tr    class="text-center border-b hover:bg-sky-200 hover:text-black"
                         @if (isset($item["documents"][0]))
+                            class="hover:cursor-pointer" 
                             wire:click="ViewDoc({{ $item["documents"][0]->id }})"
                         @endif >
                    
@@ -34,8 +35,7 @@
                         class="px-2 py-1 text-left text-green-800"
                     @else    
                         class="px-2 py-1 text-left text-red-400"
-                    @endif    
-                        >
+                    @endif >
                         {{$item->name}}
 
                     </td>
@@ -46,6 +46,12 @@
                         @else
                         <span class="text-red-400">Not loaded</span> 
                        @endif 
+                    </td>
+                    <td>
+                        @if (isset($item["documents"][0]))
+                            <button class="text-gray-500 bg-gray-300 hover:text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-2  text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                    wire:click="ViewDoc({{ $item["documents"][0]->id }})">View</button>
+                        @endif
                     </td>
                 </tr>
             @endforeach
