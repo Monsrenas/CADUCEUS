@@ -45,7 +45,7 @@ class Review extends Component
 
     public function Applicant_details($id)
     {
-        $this->postToEdit=applicant::find($id);
+        $this->postToEdit=applicant::with('reference')->find($id);
         //$this->doc_list=$this->postToEdit->documents;
         $this->nameToEdit=$this->postToEdit->user->name;
         $this->appInRev=$this->postToEdit->user_id;
@@ -53,12 +53,13 @@ class Review extends Component
         $this->doc_list=document_type::with(['documents'=>  function($q) use($UserID) {
             $q->where('user_id', '=', $UserID);
         }])->whereJsonContains('atributes->2', true)->get();
-
-        $this->reference_info= ('App\Models\\applicant')::with('reference')->where('user_id',$UserID); 
-        if ($this->reference_info->reference)  {
-            $this->reference_letter=json_decode($this->reference_info->reference->persons,true);
+        
+         
+        if ($this->postToEdit->reference)  {
+            $this->reference_letter=json_decode($this->postToEdit->reference->persons,true);
             $this->reference_letter= $this->reference_letter[1];
         }
+        
     }
 
     public function ViewDoc($post){
@@ -75,6 +76,7 @@ class Review extends Component
     }
 
     public function ViewLetter($ind){
+        
         $this->letterToView=$this->reference_letter[$ind][4];
          
         if (Storage::disk('public')->exists($this->letterToView)){

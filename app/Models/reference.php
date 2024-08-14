@@ -13,6 +13,7 @@ class reference extends Model
 
     public function applicant() 
     {
-        return $this->belongsTo(applicant::class,'id','applicant_id');
+        return $this->hasOne(applicant::class,'id','applicant_id');
     }
+
 }
