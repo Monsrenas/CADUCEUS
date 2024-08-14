@@ -97,19 +97,22 @@ class Review extends Component
         'read'=>false];
          comments::create($data);
         $this->reset('xComment');
+        
+        $this->Applicant_details($this->postToEdit->id);
     }
 
     public function updatedRvwStart($i)
     {
         $this->docToView->state=($this->docToView->state==1)?0:1;
         $this->docToView->save();
+        $this->Applicant_details($this->postToEdit->id);
     }
 
     public function updatedField()
     {
         $this->docToView->state=$this->field;
         $this->docToView->save();
-
+        $this->Applicant_details($this->postToEdit->id);
     }
 
 
