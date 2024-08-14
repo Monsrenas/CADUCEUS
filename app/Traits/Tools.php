@@ -24,8 +24,6 @@ trait Tools
         $this->dispatchBrowserEvent('message', [
             'body' => 'Password successfully reseted.',
             'timeout' => 4000 ]);
-
-        $this->render();
     }
 
     public function activation($id)
