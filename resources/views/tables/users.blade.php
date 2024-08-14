@@ -75,7 +75,8 @@
         </tbody>
     </table>
     <div class="mt-1">
-         
+       
+
        {{ $lista->withQueryString()->links() }}
     
     </div>    
