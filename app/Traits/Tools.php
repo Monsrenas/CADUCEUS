@@ -4,11 +4,12 @@ namespace App\Traits;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Livewire\WithPagination;
 use Mail;
 
 trait Tools
 {
-
+    use WithPagination;
     public $postToEdit="", $xOpen=false;
 
     public function ResetPassword($postId)
