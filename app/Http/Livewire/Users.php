@@ -8,11 +8,14 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Livewire\WithPagination;
 use Mail;
 
 class Users extends Component
 {
     use Tools;
+    use WithPagination;
+
 
     public $xAccess=[]; 
     public $typeJob="",$name, $email="", $tmpPassword="";
