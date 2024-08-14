@@ -17,7 +17,7 @@ use Mail;
 class Review extends Component
 {
 
-    public $postToEdit="", $xOpen=false;
+    public $postToEdit="", $xOpen=false, $appInRev="";
     public $typeJob="",$name, $email="", $tmpPassword="";
     public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
            $docToView=[], $field="", $rvwStart=false, $xComment="",$xGroup="", $xName="", $DocFile=""
@@ -48,7 +48,8 @@ class Review extends Component
         $this->postToEdit=applicant::find($id);
         //$this->doc_list=$this->postToEdit->documents;
         $this->nameToEdit=$this->postToEdit->user->name;
-        $UserID=$this->postToEdit->user_id;
+        $this->appInRev=$this->postToEdit->user_id;
+        $UserID=$this->appInRev;
         $this->doc_list=document_type::with(['documents'=>  function($q) use($UserID) {
             $q->where('user_id', '=', $UserID);
         }])->whereJsonContains('atributes->2', true)->get();
@@ -70,6 +71,7 @@ class Review extends Component
             $this->DocFile=$this->docToView->file;
             $this->xOpen = true; 
         }
+        $this->Applicant_details($this->postToEdit->id);
     }
 
     public function ViewLetter($ind){
@@ -84,6 +86,7 @@ class Review extends Component
                     $this->reference_info->reference->persons=json_encode(["1"=>$this->reference_letter]);
                     $this->reference_info->reference->save();
                 }
+        $this->Applicant_details($this->postToEdit->id);
     }
 
     public function sendComment()
