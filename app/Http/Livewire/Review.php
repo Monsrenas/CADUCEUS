@@ -54,7 +54,7 @@ class Review extends Component
             $q->where('user_id', '=', $UserID);
         }])->whereJsonContains('atributes->2', true)->get();
 
-        $this->reference_info= ('App\Models\\applicant')::with('reference')->where('user_id',$UserID)->first(); 
+        $this->reference_info= ('App\Models\\applicant')::with('reference')->where('user_id',$UserID); 
         if ($this->reference_info->reference)  {
             $this->reference_letter=json_decode($this->reference_info->reference->persons,true);
             $this->reference_letter= $this->reference_letter[1];
@@ -97,7 +97,7 @@ class Review extends Component
         'read'=>false];
          comments::create($data);
         $this->reset('xComment');
-        
+
         $this->Applicant_details($this->postToEdit->id);
     }
 
