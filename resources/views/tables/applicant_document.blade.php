@@ -8,6 +8,10 @@
     <p class="uppercase px-4 text-xl text-white">   Document list:  <span  class='text-blue-400 text-lg font-extrabold '>{{$nameToEdit}}</span> </p>               
     </div>
 
+    <div class="mt-1">
+        {{ $lista->withQueryString()->links() }}    
+    </div>  
+
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -22,7 +26,7 @@
         </thead>
         <tbody>
             
-            @foreach ($doc_list as $item)
+            @foreach ($list_doc as $item)
 
                 <tr    class="text-center border-b hover:bg-sky-200 hover:text-black"
                         @if (isset($item["documents"][0]))
@@ -57,7 +61,6 @@
             @endforeach
         </tbody>
     </table>
-    <div class="mt-1">
-        {{ $lista->withQueryString()->links() }}    </div>    
+    
    
 </div>

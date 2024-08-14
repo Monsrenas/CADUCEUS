@@ -16,7 +16,7 @@
                          @include('tables.reference_letters')
                     </div>
                 </div>
-                <div style="position: fixed; bottom: 5%; left: 44%; "    >
+                <div style="position: fixed; bottom: 5%; left: 70%; "    >
                     <x-secondary-button   wire:click="closeDetail" wire:loading.attr="disabled" 
                     style="-webkit-box-shadow: 2px 10px 17px 0px rgba(0,0,0,0.75);
                            -moz-box-shadow: 2px 10px 17px 0px rgba(0,0,0,0.75); box-shadow: 2px 10px 17px 0px rgba(0,0,0,0.75);">

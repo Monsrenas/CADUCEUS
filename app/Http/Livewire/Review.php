@@ -12,14 +12,17 @@ use App\Models\reference;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Livewire\WithPagination;
 use Mail;
 
 class Review extends Component
 {
+    use WithPagination;
 
     public $postToEdit="", $xOpen=false, $appInRev="";
     public $typeJob="",$name, $email="", $tmpPassword="";
-    public $doc_list=[], $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
+    protected $doc_list=[];
+    public  $nameToEdit="",$nameToDelete="", $showDeleteModal=false,
            $docToView=[], $field="", $rvwStart=false, $xComment="",$xGroup="", $xName="", $DocFile=""
            ,$reference_letter=[], $LetterType=['Good Standing letter','Reference letter'], $letterToView="", $reference_info=null,$yOpen=false;
 
