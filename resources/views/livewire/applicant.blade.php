@@ -40,15 +40,15 @@
         <!-- Modal de Crear/editar -->
         <x-dialog-modal wire:model="open" >
                     <x-slot name='title'>
+                        @if (!$this->editReference)
                         <div class="inline-flex">
                             <p class="text-md text-center">
-                                @if ($this->editReference)
-                                Institutions and people to whom a reference letter request will be sent.
-                                @else
+                                
                                     {{$this->DocName}} 
-                                @endif
+                                
                             </p>
                         </div>
+                        @endif
                     </x-slot>
 
                     <x-slot name='content'>

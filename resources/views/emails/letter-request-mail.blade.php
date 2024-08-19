@@ -44,8 +44,9 @@
             Upload files here
         </a>
     </div>    
+          
     <p>
-        Please note that the previous link will be valid for 15 days.
+        Note that the previous link will be valid for 15 days.
     </p>
 
     <p>Thank you</p>
