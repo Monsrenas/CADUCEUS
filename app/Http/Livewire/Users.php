@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class Users extends Component
 {

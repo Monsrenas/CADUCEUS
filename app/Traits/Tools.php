@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Livewire\WithPagination;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 trait Tools
 {

@@ -7,7 +7,7 @@ use Livewire\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Response;
 
 use App\Models\document_type;
