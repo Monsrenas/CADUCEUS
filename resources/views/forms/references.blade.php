@@ -33,7 +33,7 @@
         <tr>
             <td colspan="5">
                 <p class="my-3 mx-2 font-bold">
-                 Please <span class="bg-blue-500 text-white px-2 rounded-full">add</span> the data of 3 people who are being asked for reference letters on their behalf
+                 Please <span class="bg-blue-500 text-white px-2 rounded-full">add</span> the data of 3 people who are being asked for reference letters on to behalf
                 </p>
             </td>
         </tr>
