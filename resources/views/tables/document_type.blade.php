@@ -14,7 +14,7 @@
         <tbody>
             
             @foreach ($lista as $item)
-                <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
+                <tr class="text-center border-b hover:bg-sky-200 hover:text-black" wire:click="edit({{ $item->id }})">
                     <td scope="col" class="px-2 py-3 text-left">
                         {{$item["name"]}}
                     </td>

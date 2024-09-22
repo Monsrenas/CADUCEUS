@@ -27,7 +27,7 @@
             
             @foreach ($lista as $item)
                 <?php $mAccess=json_decode ($item["access"],true); ?>
-                <tr class="text-center border-b hover:bg-sky-200 hover:text-black">
+                <tr class="text-center border-b hover:bg-gray-200 hover:text-black">
                     <td>
                         @if ((auth()->user()->id<>$item->id))
                             <input wire:click='activation({{$item->id}})' {{($item->active)?'checked':''}} type="checkbox"/>

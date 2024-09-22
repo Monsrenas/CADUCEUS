@@ -56,7 +56,7 @@
                             @include('forms.references')  
                         @else
                             @if ($this->open)
-                            @include('forms.document')
+                                @include('forms.document')
                             @endif 
                         @endif
                     </x-slot>

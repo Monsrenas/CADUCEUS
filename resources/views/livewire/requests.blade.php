@@ -46,7 +46,7 @@
 </x-dialog-modal>  
 
 <!-- Modal de confirmacion de borrado -->
-<x-confirmation-modal wire:model="showDeleteModal">
+    <x-confirmation-modal wire:model="showDeleteModal">
         <x-slot name='title'>
             <h5 class="modal-title">Deletion Confirmation</h5>
         </x-slot>

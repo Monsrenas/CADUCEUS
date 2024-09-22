@@ -35,7 +35,7 @@
                     class="text-center border-b hover:bg-sky-200 hover:text-black "
                     wire:click="Applicant_details({{ $item->applicant->id }})"
                   @else
-                    class="text-center border-b "
+                    class="text-center border-b hover:bg-gray-200"
                   @endif  >
                     <td scope="col" class="px-2 py-3 text-left">
                          {{$item->name}}
@@ -54,6 +54,15 @@
                     </td>
                     <td>
                         {{$status[$item["applicant"]->process_state]}}
+                    </td>
+                    <td>
+                        @if (isset($UserAccess[9])and($UserAccess[9]==$mAccess[9]))  
+                            <button class="text-gray-500 bg-gray-300 hover:text-white hover:bg-green-800 focus:outline-none focus:ring-4 
+                                           focus:ring-green-300 font-medium rounded-full text-sm px-2  text-center me-2 mb-2 
+                                           dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                    wire:click="Applicant_details({{ $item->applicant->id }})" >View
+                            </button>
+                        @endif
                     </td>
                 </tr>
             @endforeach
