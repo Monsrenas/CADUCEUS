@@ -14,7 +14,7 @@
   @endif
 
   @if (($modelFile)and(!$document_to_edit))
-    <x-secondary-button wire:click="donwload" wire:loading.attr="disabled" class="float-right align-middle bg-green-700 hover:bg-green-600" >
+    <x-secondary-button wire:click="donwload" wire:loading.attr="disabled" class="float-right align-middle bg-green-700 hover:bg-green-600 hover:text-white" >
     &#x1F4C1; Form   ⬇
     </x-secondary-button>
   @endif

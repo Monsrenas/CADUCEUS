@@ -11,7 +11,7 @@
         List of people for reference letters
 
         <div style=" text-aling:center; font-size:.8em; color:yellow" > 
-            {{ $persons}} of 4
+            {{ $persons}} of 3
         </div>
     </div>        
     
